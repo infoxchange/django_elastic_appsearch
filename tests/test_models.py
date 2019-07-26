@@ -10,13 +10,10 @@ Tests for `django_elastic_appsearch` models module.
 
 from django.test import TestCase
 
-from django_elastic_appsearch import models
+from django_elastic_appsearch.test import MockedAppSearchTestCase
 
 
-class TestDjango_elastic_appsearch(TestCase):
-
-    def setUp(self):
-        pass
+class TestDjango_elastic_appsearch(MockedAppSearchTestCase, TestCase):
 
     def test_something(self):
         pass

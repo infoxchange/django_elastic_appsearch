@@ -16,8 +16,6 @@ DATABASES = {
     }
 }
 
-ROOT_URLCONF = "tests.urls"
-
 INSTALLED_APPS = [
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -31,3 +29,6 @@ if django.VERSION >= (1, 10):
     MIDDLEWARE = ()
 else:
     MIDDLEWARE_CLASSES = ()
+
+APPSEARCH_URL = 'example_appsearch_url'
+APPSEARCH_API_KEY = 'example_appsearch_api_key'
