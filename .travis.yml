@@ -9,10 +9,7 @@ python:
   - "3.4"
 
 env:
-  - TOX_ENV=py37-django-20
-  - TOX_ENV=py36-django-20
-  - TOX_ENV=py35-django-20
-  - TOX_ENV=py34-django-20
+  - TOX_ENV=django-20
 
 matrix:
   fast_finish: true
