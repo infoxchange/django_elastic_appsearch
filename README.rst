@@ -46,7 +46,7 @@ Configure the Django models you want to index to Elastic App Search. You can do 
 
 `AppsearchMeta.appsearch_engine_name` - Defines which engine in your app search instance your model will be indexed to.
 
-`AppsearchMeta.appsearch_serialiser_class` - Defines how your model object will be serialised when sent to your elastic app search instance. The serialiser and fields used here derives from [serpy](https://serpy.readthedocs.io/en/latest/index.html), and you can use any of the serpy features like method fields.
+`AppsearchMeta.appsearch_serialiser_class` - Defines how your model object will be serialised when sent to your elastic app search instance. The serialiser and fields used here derives from `Serpy <https://serpy.readthedocs.io/>`_, and you can use any of the serpy features like method fields.
 
 Example:
 
