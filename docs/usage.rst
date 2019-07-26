@@ -8,19 +8,13 @@ To use Django Elastic App Search in a project, add it to your `INSTALLED_APPS`:
 
     INSTALLED_APPS = (
         ...
-        'django_elastic_appsearch.apps.DjangoAppSearchConfig',
+        'django_elastic_appsearch',
         ...
     )
 
-Add Django Elastic App Search's URL patterns:
+Add the Elastic App Search URL and Key to your settings module:
 
 .. code-block:: python
 
-    from django_elastic_appsearch import urls as django_elastic_appsearch_urls
-
-
-    urlpatterns = [
-        ...
-        url(r'^', include(django_elastic_appsearch_urls)),
-        ...
-    ]
+    APPSEARCH_URL = 'https://appsearch.base.url'
+    APPSEARCH_API_KEY = 'some_appsearch_api_token'
