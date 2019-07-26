@@ -3,9 +3,13 @@
 language: python
 
 python:
+  - "3.7"
   - "3.6"
+  - "3.5"
+  - "3.4"
 
-env: 
+env:
+  - TOX_ENV=py37-django-20
   - TOX_ENV=py36-django-20
   - TOX_ENV=py35-django-20
   - TOX_ENV=py34-django-20
