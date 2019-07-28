@@ -56,7 +56,9 @@ setup(
         'django_elastic_appsearch',
     ],
     include_package_data=True,
-    install_requires=[],
+    install_requires=[
+        'swiftype_app_search'
+    ],
     license="MIT",
     zip_safe=False,
     keywords='django_elastic_appsearch',

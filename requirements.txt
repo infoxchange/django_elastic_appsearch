@@ -1,2 +1,2 @@
-swiftype_app_search>=0.6.0
+swiftype_app_search
 # Additional requirements go here
