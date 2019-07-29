@@ -2,8 +2,8 @@
 Django Elastic App Search
 =============================
 
-.. image:: https://badge.fury.io/py/django_elastic_appsearch.svg
-    :target: https://badge.fury.io/py/django_elastic_appsearch
+.. image:: https://badge.fury.io/py/django-elastic-appsearch.svg
+    :target: https://badge.fury.io/py/django-elastic-appsearch
 
 .. image:: https://travis-ci.org/CorrosiveKid/django_elastic_appsearch.svg?branch=master
     :target: https://travis-ci.org/CorrosiveKid/django_elastic_appsearch
