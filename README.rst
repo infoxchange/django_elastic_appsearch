@@ -11,6 +11,9 @@ Django Elastic App Search
 .. image:: https://codecov.io/gh/CorrosiveKid/django_elastic_appsearch/branch/master/graph/badge.svg
     :target: https://codecov.io/gh/CorrosiveKid/django_elastic_appsearch
 
+.. image:: https://readthedocs.org/projects/django-elastic-appsearch/badge/?version=latest
+    :target: https://django-elastic-appsearch.readthedocs.io/en/latest/?badge=latest
+
 Integrate your Django Project with Elastic App Search with ease.
 
 Documentation
