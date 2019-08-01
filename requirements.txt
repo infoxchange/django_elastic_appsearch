@@ -1,2 +1,0 @@
-swiftype_app_search
-# Additional requirements go here

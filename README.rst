@@ -138,10 +138,9 @@ Running Tests
 Does the code actually work?
 
 ::
-
-    source <YOURVIRTUALENV>/bin/activate
-    (myenv) $ pip install tox
-    (myenv) $ tox
+    $ pipenv install --dev
+    $ pipenv shell
+    (django_elastic_appsearch) $ tox
 
 Credits
 -------
