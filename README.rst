@@ -14,7 +14,7 @@ Django Elastic App Search
 .. image:: https://readthedocs.org/projects/django-elastic-appsearch/badge/?version=latest
     :target: https://django-elastic-appsearch.readthedocs.io/en/latest/?badge=latest
 
-.. image:: https://flat.badgen.net/dependabot/CorrosiveKid/django_elastic_appsearch?icon=dependabot
+.. image:: https://badgen.net/dependabot/CorrosiveKid/django_elastic_appsearch?icon=dependabot
     :target: https://dependabot.com/
 
 Integrate your Django Project with Elastic App Search with ease.
