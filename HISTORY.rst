@@ -14,3 +14,12 @@ History
 
 * Bug fixes
 * Documentation improvements
+
+
+0.2.3 (2019-08-02)
+++++++++++++++++++
+
+* Use Pipenv for dependency management
+* Configure Dependabot for automatic dependency upgrades
+* Remove support for Python 3.4
+* Documentation improvements
