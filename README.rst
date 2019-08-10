@@ -22,7 +22,9 @@ Integrate your Django Project with Elastic App Search with ease.
 Documentation
 -------------
 
-The full documentation is at https://django_elastic_appsearch.readthedocs.io.
+The full documentation is at https://django_elastic_appsearch.readthedocs.io. Read our step-by-step guide on integrating App Search with your existing Django project over at Medium_.
+
+.. _Medium: https://medium.com/@rasika.am/integrating-a-django-project-with-elastic-app-search-fb9f16726b5c
 
 Quickstart
 ----------
