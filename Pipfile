@@ -14,4 +14,4 @@ codecov = "*"
 tox = "*"
 
 [packages]
-swiftype-app-search = "*"
+elastic-app-search = "*"

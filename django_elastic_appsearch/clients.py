@@ -1,7 +1,7 @@
 """Django App Search Client utilities."""
 
 from django.apps import apps
-from swiftype_app_search import Client
+from elastic_app_search import Client
 
 
 def get_api_v1_client():
