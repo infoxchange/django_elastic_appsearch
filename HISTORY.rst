@@ -23,3 +23,10 @@ History
 * Configure Dependabot for automatic dependency upgrades
 * Remove support for Python 3.4
 * Documentation improvements
+
+
+0.3.1 (2019-08-16)
+++++++++++++++++++
+
+* Switch to the new official Elastic App Search python client
+* Documentation improvements
