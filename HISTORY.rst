@@ -25,7 +25,7 @@ History
 * Documentation improvements
 
 
-0.3.1 (2019-08-16)
+0.4.2 (2019-08-16)
 ++++++++++++++++++
 
 * Switch to the new official Elastic App Search python client
