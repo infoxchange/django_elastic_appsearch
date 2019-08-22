@@ -3,16 +3,10 @@
 History
 -------
 
-0.1.0 (2019-07-26)
+0.4.2 (2019-08-16)
 ++++++++++++++++++
 
-* First release on PyPI.
-
-
-0.2.2 (2019-07-29)
-++++++++++++++++++
-
-* Bug fixes
+* Switch to the new official Elastic App Search python client
 * Documentation improvements
 
 
@@ -25,8 +19,14 @@ History
 * Documentation improvements
 
 
-0.4.2 (2019-08-16)
+0.2.2 (2019-07-29)
 ++++++++++++++++++
 
-* Switch to the new official Elastic App Search python client
+* Bug fixes
 * Documentation improvements
+
+
+0.1.0 (2019-07-26)
+++++++++++++++++++
+
+* First release on PyPI.
