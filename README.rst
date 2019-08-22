@@ -26,8 +26,15 @@ The full documentation is at https://django_elastic_appsearch.readthedocs.io. Re
 
 .. _Medium: https://medium.com/@rasika.am/integrating-a-django-project-with-elastic-app-search-fb9f16726b5c
 
-Quickstart
-----------
+Dependencies
+------------
+
+* `elastic-app-search <https://pypi.org/project/elastic-app-search/>`_
+
+Usage
+-----
+Installing
+==========
 
 Install Django Elastic App Search::
 
@@ -50,11 +57,14 @@ Add the Elastic App Search URL and Key to your settings module:
     APPSEARCH_URL = 'https://appsearch.base.url'
     APPSEARCH_API_KEY = 'some_appsearch_api_token'
 
-Configure the Django models you want to index to Elastic App Search. You can do this by inheriting from the `AppSearchModel`, and then setting some meta options.
+Configuring app search indexable models
+=====================================
 
-`AppsearchMeta.appsearch_engine_name` - Defines which engine in your app search instance your model will be indexed to.
+Configure the Django models you want to index to Elastic App Search. You can do this by inheriting from the ``AppSearchModel``, and then setting some meta options.
 
-`AppsearchMeta.appsearch_serialiser_class` - Defines how your model object will be serialised when sent to your elastic app search instance. The serialiser and fields used here derives from `Serpy <https://serpy.readthedocs.io/>`_, and you can use any of the serpy features like method fields.
+``AppsearchMeta.appsearch_engine_name`` - Defines which engine in your app search instance your model will be indexed to.
+
+``AppsearchMeta.appsearch_serialiser_class`` - Defines how your model object will be serialised when sent to your elastic app search instance. The serialiser and fields used here derives from `Serpy <https://serpy.readthedocs.io/>`_, and you can use any of the serpy features like method fields.
 
 Example:
 
@@ -83,7 +93,10 @@ Example:
         model = models.CharField(max_length=100)
         manufactured_year = models.CharField(max_length=4)
 
-Then you can call `index_to_appsearch` and `delete_from_appsearch` from your model objects.
+Using model and queryset methods to index and delete documents
+==============================================================
+
+Then you can call ``index_to_appsearch`` and ``delete_from_appsearch`` from your model objects.
 
 Send the car with id 25 to app search.
 
@@ -103,7 +116,7 @@ Delete the car with id 21 from app search.
     car = Car.objects.get(id=21)
     car.delete_from_appsearch()
 
-You can also call `index_to_appsearch` and `delete_from_appsearch` on QuerySets of `AppSearchModel`
+You can also call ``index_to_appsearch`` and ``delete_from_appsearch`` on QuerySets of ``AppSearchModel``
 
 Send all cars where the make is 'Toyota' to app search.
 
@@ -119,7 +132,10 @@ Delete all cars where the make is 'Saab' from app search
     cars = Car.objects.filter(make='Saab')
     cars.delete_from_appsearch()
 
-If you want to speficy custom managers which also has this functionality, you can inherit from `django_elastic_appsearch.orm.AppSearchQuerySet`
+Use with your own custom queryset managers
+==========================================
+
+If you want to specify custom managers which also has this functionality, you can inherit from ``django_elastic_appsearch.orm.AppSearchQuerySet``
 
 .. code-block:: python
 
@@ -136,6 +152,59 @@ If you want to speficy custom managers which also has this functionality, you ca
         # Set the custom manager
         objects = MyCustomQuerySetManager.as_manager()
 
+Writing Tests
+=============
+
+This package provides a test case mixin called ``MockedAppSearchTestCase`` which makes it easier for you to write test cases against ``AppSearchModel``'s without actually having to run an Elastic App Search instance during tests.
+
+All you have to do is inherite the mixin, and all the calls to Elastic App Search will be mocked. Example below.
+
+.. code-block:: python
+
+    from django.test import TestCase
+    from django_elastic_appsearch.test import MockedAppSearchTestCase
+    from myapp.test.factories import CarFactory
+
+    class BookTestCase(MockedAppSearchTestCase, TestCase):
+        def test_indexing_book(self):
+            car = CarFactory()
+            car.save()
+            car.index_to_appsearch()
+
+            self.assertAppSearchModelIndexCallCount(1)
+
+You will have access to the following methods to check call counts to different mocked app search methods.
+
+``self.assertAppSearchQuerySetIndexCallCount`` — Check the number of times index_to_appsearch was called on a appsearch model querysets.
+
+``self.assertAppSearchQuerySetDeleteCallCount`` — Check the number of times delete_from_appsearch was called on an appsearch model querysets.
+
+``self.assertAppSearchModelIndexCallCount`` — Check the number of times index_to_appsearch was called on an appsearch model objects.
+
+``self.assertAppSearchModelDeleteCallCount`` — Check the number of times delete_from_appsearch was called on an appsearch model objects.
+
+Using the elastic app search python client
+==========================================
+
+We use the official `elastic app search python client <https://github.com/elastic/app-search-python>`_ under the hood to communicate with the app search instance. So if needed, you can access the app search instance directly and use the functionality of the official elastic app search `client <https://github.com/elastic/app-search-python#usage>`_. Example below.
+
+.. code-block:: python
+
+    from django_elastic_appsearch.clients import get_api_v1_client
+
+    client = get_api_v1_client()
+    client.search('cars', 'Toyota Corolla', {})
+
+Contributing
+------------
+
+Contributors are welcome!
+
+* Prior to opening a pull request, please create an issue to discuss the change/feature you've written/thinking of writing.
+
+* Please write simple code and concise documentation, when appropriate.
+
+* Please write test cases to cover the code you've written, where possible.
 
 Running Tests
 -------------
