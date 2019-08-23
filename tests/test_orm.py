@@ -7,8 +7,10 @@ from datetime import datetime
 from unittest.mock import patch
 
 from django.test import TestCase
+from django_elastic_appsearch import serialisers
 
 from example.models import Car
+from example.serialisers import CarSerialiser
 
 
 class TestORM(TestCase):
@@ -64,3 +66,36 @@ class TestORM(TestCase):
         # Note that the app search chunk size is set to 5 in `tests.settings`
         # Therefore you should see 5 calls to cover 22 documents
         self.assertEqual(self.client_destroy.call_count, 5)
+
+    def test_set_appsearch_serialiser_class(self):
+        """Test classmethod to set an appsearch serialiser class."""
+
+        # Define a test serialiser class.
+        class TestSerialiserClass(serialisers.AppSearchSerialiser):
+            test_field = serialisers.Field()
+
+        # Set the new serialiser class to the Car model.
+        Car.set_appsearch_serialiser_class(TestSerialiserClass)
+
+        # Test if its set successfully
+        serialiser_class = Car.get_appsearch_serialiser_class()
+        self.assertEqual(serialiser_class, TestSerialiserClass)
+
+        # Reset it back to original
+        Car.set_appsearch_serialiser_class(CarSerialiser)
+
+    def test_set_appsearch_engine_name(self):
+        """Test classmethod to set an appsearch engine name for a model."""
+
+        # Get the current engine name and store it
+        original_engine_name = Car.get_appsearch_engine_name()
+
+        # Set a new app search engine name
+        Car.set_appsearch_engine_name('test_cars')
+
+        # Test if its set successfully
+        engine_name = Car.get_appsearch_engine_name()
+        self.assertEqual(engine_name, 'test_cars')
+
+        # Reset it back to the original
+        Car.set_appsearch_engine_name(original_engine_name)
