@@ -14,9 +14,8 @@ from example.models import Car
 class TestSlicer(TestCase):
     """Test Queryset slicer."""
 
-    def test_slice_queryset(self):
-        """Test if the `slice_queryset` works as expected."""
-
+    def setUp(self, *args, **kwargs):
+        """Add the test cars."""
         # Create 22 cars
         for i in range(0, 22):
             datetime_now = datetime.now()
@@ -28,7 +27,9 @@ class TestSlicer(TestCase):
             )
             car.save()
 
-        # Get a queryset of all cars
+    def test_slice_queryset(self):
+        """Test if the `slice_queryset` works as expected."""
+        # Get a queryset of all 22 cars
         queryset = Car.objects.all()
         self.assertEqual(queryset.count(), 22)
 
@@ -42,3 +43,16 @@ class TestSlicer(TestCase):
                 self.assertEqual(queryset.count(), 5)
             else:
                 self.assertEqual(queryset.count(), 2)
+
+    def test_slicing_queryset_smaller_than_chunk_size(self):
+        """Test if slicing a queryset smaller than the specified chunk size."""
+        # Get a queryset of all 22 cars
+        queryset = Car.objects.all()
+        self.assertEqual(queryset.count(), 22)
+
+        # Slice the queryset into chunks of 30
+        slices = slice_queryset(queryset, 30)
+
+        # First slice should have all 22 cars
+        for queryset in slices:
+            self.assertEqual(queryset.count(), 22)
