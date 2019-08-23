@@ -67,7 +67,7 @@ setup(
         'Development Status :: 3 - Alpha',
         'Framework :: Django :: 2.2',
         'Intended Audience :: Developers',
-        'License :: OSI Approved :: BSD License',
+        'License :: OSI Approved :: MIT License',
         'Natural Language :: English',
         'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
