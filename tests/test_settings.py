@@ -76,6 +76,16 @@ class TestDjangoElasticAppSearchSettings(TestCase):
         )
         self.assertEqual(config.chunk_size, 25)
 
+    @override_settings()
+    def test_appsearch_chunk_size_default(self):
+        """Test when `APPSEARCH_CHUNK_SIZE` is not set, defaults to 100."""
+        del settings.APPSEARCH_CHUNK_SIZE
+        config = DjangoAppSearchConfig(
+            app_name=self.original_config.name,
+            app_module=self.original_config.module
+        )
+        self.assertEqual(config.chunk_size, 100)
+
     @override_settings(APPSEARCH_INDEXING_ENABLED=False)
     def test_appsearch_indexing_enabled_setting(self):
         """Test `APPSEARCH_INDEXING_ENABLED` setting."""
