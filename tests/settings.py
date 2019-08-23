@@ -33,3 +33,4 @@ else:
 
 APPSEARCH_URL = 'example_appsearch_url'
 APPSEARCH_API_KEY = 'example_appsearch_api_key'
+APPSEARCH_CHUNK_SIZE = 5
