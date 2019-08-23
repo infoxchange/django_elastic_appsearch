@@ -21,6 +21,7 @@ INSTALLED_APPS = [
     "django.contrib.contenttypes",
     "django.contrib.sites",
     "django_elastic_appsearch",
+    "example",
 ]
 
 SITE_ID = 1
