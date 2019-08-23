@@ -30,6 +30,7 @@ Dependencies
 ------------
 
 * `elastic-app-search <https://pypi.org/project/elastic-app-search/>`_
+* `serpy <https://pypi.org/project/serpy/>`_
 
 Usage
 -----

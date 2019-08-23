@@ -57,7 +57,8 @@ setup(
     ],
     include_package_data=True,
     install_requires=[
-        'elastic-app-search'
+        'elastic-app-search',
+        'serpy',
     ],
     license="MIT",
     zip_safe=False,
