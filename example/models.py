@@ -1,10 +1,6 @@
 """Example Django app models."""
 
-from datetime import datetime
-
 from django.db import models
-from django.test import TestCase
-
 from django_elastic_appsearch.orm import AppSearchModel
 
 from example.serialisers import CarSerialiser
