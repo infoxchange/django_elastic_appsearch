@@ -59,13 +59,13 @@ Add the Elastic App Search URL and Key to your settings module:
     APPSEARCH_API_KEY = 'some_appsearch_api_token'
 
 Configuring app search indexable models
-=====================================
+=======================================
 
 Configure the Django models you want to index to Elastic App Search. You can do this by inheriting from the ``AppSearchModel``, and then setting some meta options.
 
 ``AppsearchMeta.appsearch_engine_name`` - Defines which engine in your app search instance your model will be indexed to.
 
-``AppsearchMeta.appsearch_serialiser_class`` - Defines how your model object will be serialised when sent to your elastic app search instance. The serialiser and fields used here derives from `Serpy <https://serpy.readthedocs.io/>`_, and you can use any of the serpy features like method fields.
+``AppsearchMeta.appsearch_serialiser_class`` - Defines how your model object will be serialised when sent to your elastic app search instance. The serialiser and fields used here derives from `Serpy <https://serpy.readthedocs.io/>`__, and you can use any of the serpy features like method fields.
 
 Example:
 
