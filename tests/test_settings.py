@@ -3,15 +3,22 @@
 
 """Test cases for Django Elastic App Search settings configurations."""
 
+from datetime import datetime
+from unittest.mock import patch
+
 from django.apps import apps
 from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
-from django.test import TestCase, override_settings
+from django.test import override_settings
 
 from django_elastic_appsearch.apps import DjangoAppSearchConfig
 
+from example.models import Car
 
-class TestDjangoElasticAppSearchSettings(TestCase):
+from .base import BaseElasticAppSearchClientTestCase
+
+
+class TestDjangoElasticAppSearchSettings(BaseElasticAppSearchClientTestCase):
     """Test django_elastic_appsearch settings configurations."""
 
     def setUp(self):
@@ -94,3 +101,36 @@ class TestDjangoElasticAppSearchSettings(TestCase):
             app_module=self.original_config.module
         )
         self.assertFalse(config.enabled)
+
+    @override_settings(APPSEARCH_INDEXING_ENABLED=False)
+    def test_disabling_indexing(self):
+        """Test disabling app search indexing."""
+        config = DjangoAppSearchConfig(
+            app_name=self.original_config.name,
+            app_module=self.original_config.module,
+        )
+        # Create 22 cars
+        for i in range(0, 22):
+            datetime_now = datetime.now()
+            # Create a car
+            car = Car(
+                make='Make {}'.format(i),
+                model='Model {}'.format(i),
+                year_manufactured=datetime_now
+            )
+            car.save()
+        with patch(
+            'django_elastic_appsearch.orm.apps.get_app_config',
+            autospec=True,
+            return_value=config
+        ):
+            car = Car.objects.first()
+            car.index_to_appsearch()
+            car.delete_from_appsearch()
+
+            car_queryset = Car.objects.all()
+            car_queryset.index_to_appsearch()
+            car_queryset.delete_from_appsearch()
+
+            self.assertEqual(self.client_index.call_count, 0)
+            self.assertEqual(self.client_destroy.call_count, 0)
