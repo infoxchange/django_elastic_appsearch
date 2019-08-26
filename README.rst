@@ -153,6 +153,82 @@ If you want to specify custom managers which also has this functionality, you ca
         # Set the custom manager
         objects = MyCustomQuerySetManager.as_manager()
 
+Settings
+========
+
+This package provides various Django settings entries you can use to configure your connection to the Elastic App Search instance you're using.
+
+APPSEARCH_URL
+^^^^^^^^^^^^^
+
+Required: Yes
+Default: No default value
+
+This is a **required** setting to tell your Django application which Elastic App Search instance to connect with.
+
+.. code-block:: python
+
+    APPSEARCH_URL = 'localhost:3002'
+
+APPSEARCH_API_KEY
+^^^^^^^^^^^^^^^^^
+
+Required: Yes
+Default: No default value
+
+This is a **required** setting to tell your Django application the private key to use to talk to your Elastic App Search instance.
+
+.. code-block:: python
+
+    APPSEARCH_API_KEY = 'private-key'
+
+APPSEARCH_USE_HTTPS
+^^^^^^^^^^^^^^^^^^^
+
+Required: No
+Default: ``True``
+
+This is an **optional** setting to configure whether to use HTTPS or not when your Django application communicates with your Elastic App Search instances. It defaults to ``True`` if it's not set. This might be useful when you're running your Django project against a local Elastic App Search instance. It's insecure to have this as ``False`` in a production environment, so make sure to change to ``True`` in your production version.
+
+.. code-block:: python
+
+    APPSEARCH_USE_HTTPS = False
+
+APPSEARCH_CHUNK_SIZE
+^^^^^^^^^^^^^^^^^^^^
+
+Required: No
+Default: ``100``
+
+This is an **optional** setting to configure the chunk size when doing queryset indexing/deleting. Elastic App Search supports upto a 100 documents in one request, so by you can change it to your liking by adjusting this setting. It defaults to ``100`` when this setting is not set. This might be useful when you want to reduce the size of a request to your Elastic App Search instance when your documents have a lot of fields/data.
+
+.. code-block:: python
+
+    APPSEARCH_CHUNK_SIZE = 50
+
+APPSEARCH_INDEXING_ENABLED
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Required: No
+Default: ``True``
+
+This is an **optional** setting to configure if you want to disable indexing to your Elastic App Search instance. This is useful when you want to disable indexing without changing any code. When it's set to ``False``, any code where you use ``index_to_appsearch()`` or ``delete_from_appsearch()`` will not do anything. It's set to ``True`` by default when it's not set.
+
+.. code-block:: python
+
+    APPSEARCH_INDEXING_ENABLED = True
+
+Example with all settings entries
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. code-block:: python
+
+    APPSEARCH_URL = 'localhost:3002'
+    APPSEARCH_API_KEY = 'private-key'
+    APPSEARCH_USE_HTTPS = False
+    APPSEARCH_CHUNK_SIZE = 50
+    APPSEARCH_INDEXING_ENABLED = True
+
 Writing Tests
 =============
 
