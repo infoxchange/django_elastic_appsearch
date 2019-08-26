@@ -4,30 +4,21 @@
 """Test cases for the ORM methods."""
 
 from datetime import datetime
-from unittest.mock import patch
 
-from django.test import TestCase
 from django_elastic_appsearch import serialisers
 
 from example.models import Car
 from example.serialisers import CarSerialiser
 
+from .base import BaseElasticAppSearchClientTestCase
 
-class TestORM(TestCase):
+
+class TestORM(BaseElasticAppSearchClientTestCase):
     """Test Django Elastic App Search ORM functions."""
 
     def setUp(self):
         """Setup the patches and test data."""
         super().setUp()
-        client_index = patch('elastic_app_search.Client.index_documents')
-        client_destroy = patch('elastic_app_search.Client.destroy_documents')
-
-        self.client_index = client_index.start()
-        self.client_destroy = client_destroy.start()
-
-        self.addCleanup(client_index.stop)
-        self.addCleanup(client_destroy.stop)
-
         # Create 22 cars
         for i in range(0, 22):
             datetime_now = datetime.now()
