@@ -3,6 +3,15 @@
 History
 -------
 
+0.5.0 (2019-08-26)
+++++++++++++++++++
+
+* Add serpy as an official dependency
+* Improve test coverage
+* Improve documentation
+* Bump dependency version
+
+
 0.4.2 (2019-08-16)
 ++++++++++++++++++
 
