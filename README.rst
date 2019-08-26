@@ -201,11 +201,13 @@ Contributing
 
 Contributors are welcome!
 
-* Prior to opening a pull request, please create an issue to discuss the change/feature you've written/thinking of writing.
+* Prior to opening a pull request, please create an issue to discuss the change/feature you've written/thinking of writing if it doesn't already exist.
 
 * Please write simple code and concise documentation, when appropriate.
 
 * Please write test cases to cover the code you've written, where possible.
+
+* Read the `Contributing <https://django-elastic-appsearch.readthedocs.io/en/latest/contributing.html#>`_ section of our documentation for more information around contributing to this project.
 
 Running Tests
 -------------
