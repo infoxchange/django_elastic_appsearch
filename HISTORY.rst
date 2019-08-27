@@ -3,6 +3,12 @@
 History
 -------
 
+0.5.2 (2019-08-28)
+==================
+
+* Improve documentation
+* Refactor settings name ``APPSEARCH_URL`` -> ``APPSEARCH_HOST``
+
 0.5.1 (2019-08-26)
 ==================
 
