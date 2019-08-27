@@ -159,7 +159,7 @@ Settings
 This package provides various Django settings entries you can use to configure your connection to the Elastic App Search instance you're using.
 
 APPSEARCH_HOST
-^^^^^^^^^^^^^
+^^^^^^^^^^^^^^
 
 * Required: Yes
 * Default: No default value
