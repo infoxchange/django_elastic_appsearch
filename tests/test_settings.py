@@ -27,9 +27,9 @@ class TestDjangoElasticAppSearchSettings(BaseElasticAppSearchClientTestCase):
         self.original_config = apps.get_app_config('django_elastic_appsearch')
 
     @override_settings()
-    def test_appsearch_url_config_check(self):
-        """Test `APPSEARCH_URL` configuration check."""
-        del settings.APPSEARCH_URL
+    def test_appsearch_host_config_check(self):
+        """Test `APPSEARCH_HOST` configuration check."""
+        del settings.APPSEARCH_HOST
         with self.assertRaises(ImproperlyConfigured):
             config = DjangoAppSearchConfig(
                 app_name=self.original_config.name,
@@ -46,9 +46,9 @@ class TestDjangoElasticAppSearchSettings(BaseElasticAppSearchClientTestCase):
                 app_module=self.original_config.module
             )
 
-    @override_settings(APPSEARCH_URL=None)
-    def test_appsearch_url_is_none(self):
-        """Test setting None for `APPSEARCH_URL` disables the app."""
+    @override_settings(APPSEARCH_HOST=None)
+    def test_appsearch_host_is_none(self):
+        """Test setting None for `APPSEARCH_HOST` disables the app."""
         config = DjangoAppSearchConfig(
             app_name=self.original_config.name,
             app_module=self.original_config.module

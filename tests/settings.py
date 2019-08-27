@@ -31,6 +31,6 @@ if django.VERSION >= (1, 10):
 else:
     MIDDLEWARE_CLASSES = ()
 
-APPSEARCH_URL = 'example_appsearch_url'
+APPSEARCH_HOST = 'example_appsearch_host'
 APPSEARCH_API_KEY = 'example_appsearch_api_key'
 APPSEARCH_CHUNK_SIZE = 5
