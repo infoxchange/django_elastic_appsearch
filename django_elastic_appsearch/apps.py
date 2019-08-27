@@ -13,17 +13,17 @@ class DjangoAppSearchConfig(AppConfig):
 
     def __init__(self, *args, **kwargs):
         """Initialise the config."""
-        if not hasattr(settings, 'APPSEARCH_URL'):
+        if not hasattr(settings, 'APPSEARCH_HOST'):
             raise ImproperlyConfigured(
-                "You must specify the `APPSEARCH_URL` in your settings."
+                "You must specify the `APPSEARCH_HOST` in your settings."
             )
         if not hasattr(settings, 'APPSEARCH_API_KEY'):
             raise ImproperlyConfigured(
                 "You must specify the `APPSEARCH_API_KEY` in your settings."
             )
 
-        if settings.APPSEARCH_URL:
-            self.api_v1_base_endpoint = settings.APPSEARCH_URL + '/api/as/v1'
+        if settings.APPSEARCH_HOST:
+            self.api_v1_base_endpoint = settings.APPSEARCH_HOST + '/api/as/v1'
         else:
             self.api_v1_base_endpoint = None
 
@@ -45,7 +45,7 @@ class DjangoAppSearchConfig(AppConfig):
             self.enabled = True
 
         # Don't try to index documents to app search if
-        # APPSEARCH_URL or APPSEARCH_API_KEY is set to None
+        # APPSEARCH_HOST or APPSEARCH_API_KEY is set to None
         if self.api_v1_base_endpoint is None or self.api_key is None:
             self.enabled = False
 

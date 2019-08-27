@@ -55,7 +55,7 @@ Add the Elastic App Search URL and Key to your settings module:
 
 .. code-block:: python
 
-    APPSEARCH_URL = 'localhost:3002'
+    APPSEARCH_HOST = 'localhost:3002'
     APPSEARCH_API_KEY = 'some_appsearch_api_token'
 
 Configuring app search indexable models
@@ -158,7 +158,7 @@ Settings
 
 This package provides various Django settings entries you can use to configure your connection to the Elastic App Search instance you're using.
 
-APPSEARCH_URL
+APPSEARCH_HOST
 ^^^^^^^^^^^^^
 
 * Required: Yes
@@ -168,7 +168,7 @@ This is a **required** setting to tell your Django application which Elastic App
 
 .. code-block:: python
 
-    APPSEARCH_URL = 'localhost:3002'
+    APPSEARCH_HOST = 'localhost:3002'
 
 APPSEARCH_API_KEY
 ^^^^^^^^^^^^^^^^^
@@ -223,7 +223,7 @@ Example with all settings entries
 
 .. code-block:: python
 
-    APPSEARCH_URL = 'localhost:3002'
+    APPSEARCH_HOST = 'localhost:3002'
     APPSEARCH_API_KEY = 'private-key'
     APPSEARCH_USE_HTTPS = False
     APPSEARCH_CHUNK_SIZE = 50
