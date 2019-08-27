@@ -200,7 +200,7 @@ APPSEARCH_CHUNK_SIZE
 * Required: No
 * Default: ``100``
 
-This is an **optional** setting to configure the chunk size when doing queryset indexing/deleting. Elastic App Search supports upto a 100 documents in one request, so by you can change it to your liking by adjusting this setting. It defaults to ``100`` when this setting is not set. This might be useful when you want to reduce the size of a request to your Elastic App Search instance when your documents have a lot of fields/data.
+This is an **optional** setting to configure the chunk size when doing queryset indexing/deleting. Elastic App Search supports upto a 100 documents in one index/destroy request. With this setting, you can change it to your liking. It defaults to the maximum of ``100`` when this is not set. This might be useful when you want to reduce the size of a request to your Elastic App Search instance when your documents have a lot of fields/data.
 
 .. code-block:: python
 
@@ -234,7 +234,7 @@ Writing Tests
 
 This package provides a test case mixin called ``MockedAppSearchTestCase`` which makes it easier for you to write test cases against ``AppSearchModel``'s without actually having to run an Elastic App Search instance during tests.
 
-All you have to do is inherite the mixin, and all the calls to Elastic App Search will be mocked. Example below.
+All you have to do is inherit the mixin, and all the calls to Elastic App Search will be mocked. Example below.
 
 .. code-block:: python
 
