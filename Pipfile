@@ -6,7 +6,7 @@ verify_ssl = true
 [dev-packages]
 bumpversion = "*"
 wheel = "*"
-twine = "<2.0"
+twine = "<4.0"
 coverage = "*"
 mock = "*"
 flake8 = "*"
