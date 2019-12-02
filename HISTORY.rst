@@ -3,21 +3,30 @@
 History
 -------
 
+0.5.6 (2019-12-03)
+==================
+
+* Dependency upgrades
+
+
 0.5.5 (2019-11-14)
 ==================
 
 * Dependency upgrades
+
 
 0.5.4 (2019-10-02)
 ==================
 
 * Dependency upgrades
 
+
 0.5.3 (2019-08-28)
 ==================
 
 * Improve documentation
 * Refactor settings name ``APPSEARCH_URL`` -> ``APPSEARCH_HOST``
+
 
 0.5.1 (2019-08-26)
 ==================
