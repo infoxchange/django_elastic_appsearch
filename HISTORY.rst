@@ -3,6 +3,16 @@
 History
 -------
 
+0.6.0 (2019-12-04)
+==================
+
+* Remove support for Python 3.5
+* Add support for Python 3.8
+* Add support for Django 3
+* Dependency upgrades
+* Bump development status to Beta
+
+
 0.5.6 (2019-12-03)
 ==================
 
