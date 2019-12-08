@@ -10,6 +10,8 @@ python:
 
 env:
   - TOX_ENV=django-20
+  - TOX_ENV=django-21
+  - TOX_ENV=django-22
   - TOX_ENV=django-30
 
 matrix:
