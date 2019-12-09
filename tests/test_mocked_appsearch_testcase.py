@@ -3,9 +3,8 @@
 
 """Test cases for `MockedAppSearchTestCase`."""
 
-from datetime import datetime
-
 from django.test import TestCase
+from django.utils import timezone
 from django_elastic_appsearch.test import MockedAppSearchTestCase
 
 from example.models import Car
@@ -17,17 +16,17 @@ class TestMockedAppSearchTestCase(MockedAppSearchTestCase, TestCase):
     def setUp(self, *args, **kwargs):
         """Load test data."""
         super().setUp(*args, **kwargs)
-        datetime_now = datetime.now()
+        timezone_now = timezone.now()
         car1 = Car(
             make='Toyota',
             model='Corolla',
-            year_manufactured=datetime_now
+            year_manufactured=timezone_now
         )
         car1.save()
         car2 = Car(
             make='Peugeot',
             model='307',
-            year_manufactured=datetime_now
+            year_manufactured=timezone_now
         )
         car2.save()
 

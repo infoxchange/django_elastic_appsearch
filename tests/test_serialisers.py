@@ -3,9 +3,8 @@
 
 """Test cases for serialisers."""
 
-from datetime import datetime
-
 from django.test import TestCase
+from django.utils import timezone
 
 from example.models import Car
 from example.serialisers import CarSerialiser
@@ -17,12 +16,12 @@ class TestAppSearchSerialiser(TestCase):
     def test_app_search_serialiser(self):
         """Test the `AppSearchSerialiser`."""
 
-        datetime_now = datetime.now()
+        timezone_now = timezone.now()
         # Create a car
         car = Car(
             make='Toyota',
             model='Corolla',
-            year_manufactured=datetime_now
+            year_manufactured=timezone_now
         )
         car.save()
 
@@ -36,4 +35,4 @@ class TestAppSearchSerialiser(TestCase):
         self.assertEqual(data.get('make'), 'Toyota')
         self.assertEqual(data.get('model'), 'Corolla')
         self.assertEqual(data.get('verbose_name'), 'Toyota Corolla')
-        self.assertEqual(data.get('year_manufactured'), datetime_now)
+        self.assertEqual(data.get('year_manufactured'), timezone_now)
