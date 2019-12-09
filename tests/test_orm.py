@@ -3,8 +3,7 @@
 
 """Test cases for the ORM methods."""
 
-from datetime import datetime
-
+from django.utils import timezone
 from django_elastic_appsearch import serialisers
 
 from example.models import Car
@@ -21,12 +20,12 @@ class TestORM(BaseElasticAppSearchClientTestCase):
         super().setUp()
         # Create 22 cars
         for i in range(0, 22):
-            datetime_now = datetime.now()
+            timezone_now = timezone.now()
             # Create a car
             car = Car(
                 make='Make {}'.format(i),
                 model='Model {}'.format(i),
-                year_manufactured=datetime_now
+                year_manufactured=timezone_now
             )
             car.save()
 

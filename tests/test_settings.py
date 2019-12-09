@@ -3,12 +3,12 @@
 
 """Test cases for Django Elastic App Search settings configurations."""
 
-from datetime import datetime
 from unittest.mock import patch
 
 from django.apps import apps
 from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
+from django.utils import timezone
 from django.test import override_settings
 
 from django_elastic_appsearch.apps import DjangoAppSearchConfig
@@ -111,12 +111,12 @@ class TestDjangoElasticAppSearchSettings(BaseElasticAppSearchClientTestCase):
         )
         # Create 22 cars
         for i in range(0, 22):
-            datetime_now = datetime.now()
+            timezone_now = timezone.now()
             # Create a car
             car = Car(
                 make='Make {}'.format(i),
                 model='Model {}'.format(i),
-                year_manufactured=datetime_now
+                year_manufactured=timezone_now
             )
             car.save()
         with patch(

@@ -3,9 +3,8 @@
 
 """Test cases for the queryset slicer."""
 
-from datetime import datetime
-
 from django.test import TestCase
+from django.utils import timezone
 from django_elastic_appsearch.slicer import slice_queryset
 
 from example.models import Car
@@ -18,12 +17,12 @@ class TestSlicer(TestCase):
         """Add the test cars."""
         # Create 22 cars
         for i in range(0, 22):
-            datetime_now = datetime.now()
+            timezone_now = timezone.now()
             # Create a car
             car = Car(
                 make='Make {}'.format(i),
                 model='Model {}'.format(i),
-                year_manufactured=datetime_now
+                year_manufactured=timezone_now
             )
             car.save()
 
