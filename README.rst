@@ -29,6 +29,8 @@ The full documentation is at https://django_elastic_appsearch.readthedocs.io. Re
 Dependencies
 ------------
 
+* Python >= 3.6
+* Django >= 2.0
 * `elastic-app-search <https://pypi.org/project/elastic-app-search/>`_
 * `serpy <https://pypi.org/project/serpy/>`_
 
