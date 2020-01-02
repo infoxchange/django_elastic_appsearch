@@ -8,6 +8,9 @@ Django Elastic App Search
 .. image:: https://travis-ci.org/CorrosiveKid/django_elastic_appsearch.svg?branch=master
     :target: https://travis-ci.org/CorrosiveKid/django_elastic_appsearch
 
+.. image:: https://github.com/corrosivekid/django_elastic_appsearch/workflows/Lint/badge.svg
+    :target: https://github.com/CorrosiveKid/django_elastic_appsearch/actions?query=workflow%3ALint
+
 .. image:: https://codecov.io/gh/CorrosiveKid/django_elastic_appsearch/branch/master/graph/badge.svg
     :target: https://codecov.io/gh/CorrosiveKid/django_elastic_appsearch
 
