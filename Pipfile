@@ -12,6 +12,7 @@ mock = "*"
 flake8 = "*"
 codecov = "*"
 tox = "*"
+importlib-metadata = "*"
 
 [packages]
 elastic-app-search = "*"
