@@ -1,5 +1,6 @@
 """A Queryset slicer for Django."""
 
+
 def slice_queryset(queryset, chunk_size):
     """ Slice a queryset into chunks. """
 

@@ -31,7 +31,7 @@ class TestDjangoElasticAppSearchSettings(BaseElasticAppSearchClientTestCase):
         """Test `APPSEARCH_HOST` configuration check."""
         del settings.APPSEARCH_HOST
         with self.assertRaises(ImproperlyConfigured):
-            config = DjangoAppSearchConfig(
+            DjangoAppSearchConfig(
                 app_name=self.original_config.name,
                 app_module=self.original_config.module
             )
@@ -41,7 +41,7 @@ class TestDjangoElasticAppSearchSettings(BaseElasticAppSearchClientTestCase):
         """Test `APPSEARCH_API_KEY` configuration check."""
         del settings.APPSEARCH_API_KEY
         with self.assertRaises(ImproperlyConfigured):
-            config = DjangoAppSearchConfig(
+            DjangoAppSearchConfig(
                 app_name=self.original_config.name,
                 app_module=self.original_config.module
             )
