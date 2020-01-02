@@ -3,6 +3,15 @@
 History
 -------
 
+0.6.2 (2020-01-02)
+==================
+
+* Dependency upgrades
+* Documentation improvements
+* Add linting for CI
+* Setup automatic PyPI releases
+
+
 0.6.1 (2019-12-24)
 ==================
 
