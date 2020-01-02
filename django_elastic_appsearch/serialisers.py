@@ -1,7 +1,7 @@
 """Serialisers for Django models -> Elastic App Search objects."""
 
 # pylint:disable=unused-import
-from serpy import Field, MethodField, Serializer, StrField
+from serpy import Field, MethodField, Serializer, StrField  # noqa: F401
 
 
 class AppSearchSerialiser(Serializer):
