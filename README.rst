@@ -5,8 +5,8 @@ Django Elastic App Search
 .. image:: https://badge.fury.io/py/django-elastic-appsearch.svg
     :target: https://badge.fury.io/py/django-elastic-appsearch
 
-.. image:: https://travis-ci.org/CorrosiveKid/django_elastic_appsearch.svg?branch=master
-    :target: https://travis-ci.org/CorrosiveKid/django_elastic_appsearch
+.. image:: https://github.com/corrosivekid/django_elastic_appsearch/workflows/Tests/badge.svg
+    :target: https://github.com/CorrosiveKid/django_elastic_appsearch/actions?query=workflow%3ATests
 
 .. image:: https://github.com/corrosivekid/django_elastic_appsearch/workflows/Lint/badge.svg
     :target: https://github.com/CorrosiveKid/django_elastic_appsearch/actions?query=workflow%3ALint

@@ -1,0 +1,32 @@
+name: Tests
+
+on:
+  pull_request:
+      branches:
+        - master
+  push:
+      branches:
+        - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [ '3.6', '3.7', '3.8']
+        tox-env: [ 'django-20', 'django-21', 'django-22', 'django-30' ]
+    name: python-${{ matrix.python-version }} / ${{ matrix.tox-env }}
+    steps:
+      - uses: actions/checkout@v1
+      - name: Setup python
+        uses: actions/setup-python@v1
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install tox codecov
+      - name: Run tests
+        run: tox -e ${{ matrix.tox-env }}
+      - name: Coverage report
+        run: codecov -e ${{ matrix.tox-env }} -t ${{ secrets.CODECOV_TOKEN }}
