@@ -3,6 +3,13 @@
 History
 -------
 
+0.6.3 (2020-01-03)
+==================
+
+* Move from Travis CI to Github Actions
+* Documentation updates
+
+
 0.6.2 (2020-01-02)
 ==================
 
