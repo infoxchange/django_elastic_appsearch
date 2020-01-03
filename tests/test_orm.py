@@ -89,3 +89,6 @@ class TestORM(BaseElasticAppSearchClientTestCase):
 
         # Reset it back to the original
         Car.set_appsearch_engine_name(original_engine_name)
+
+    def test_fail(self):
+            self.assertEqual(1, 0)
