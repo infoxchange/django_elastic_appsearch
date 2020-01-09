@@ -17,6 +17,9 @@ Django Elastic App Search
 .. image:: https://readthedocs.org/projects/django-elastic-appsearch/badge/?version=latest
     :target: https://django-elastic-appsearch.readthedocs.io/en/latest/?badge=latest
 
+.. image:: https://github.com/corrosivekid/django_elastic_appsearch/workflows/Dependencies/badge.svg
+    :target: https://github.com/CorrosiveKid/django_elastic_appsearch/actions?query=workflow%3ADependencies
+
 .. image:: https://badgen.net/dependabot/CorrosiveKid/django_elastic_appsearch?icon=dependabot
     :target: https://dependabot.com/
 
