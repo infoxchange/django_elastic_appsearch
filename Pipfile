@@ -6,13 +6,12 @@ verify_ssl = true
 [dev-packages]
 bumpversion = "*"
 wheel = "*"
-twine = "<2.0"
+twine = "*"
 coverage = "*"
 mock = "*"
 flake8 = "*"
 codecov = "*"
 tox = "*"
-importlib-metadata = "*"
 
 [packages]
 elastic-app-search = "*"
