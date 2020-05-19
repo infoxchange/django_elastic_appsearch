@@ -21,7 +21,7 @@ jobs:
           python-version: '3.8'
       - name: Install pipenv
         run: |
-          pip3 install pipenv
+          pip3 install --upgrade --pre pipenv
       - name: Check dependencies
         run: |
           pipenv sync --dev
