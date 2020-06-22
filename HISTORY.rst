@@ -4,7 +4,7 @@ History
 -------
 
 0.6.10 (2020-06-22)
-==================
+===================
 
 * Fix failing dependency check with pipenv
 * Dependency upgrades
