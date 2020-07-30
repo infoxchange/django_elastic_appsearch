@@ -35,7 +35,7 @@ class TestORM(BaseElasticAppSearchClientTestCase):
         car.index_to_appsearch()
         self.assertEqual(self.client_index.call_count, 1)
 
-    def test_model_object_index(self):
+    def test_model_object_update(self):
         """Test indexing a model object to appsearch as an update operation."""
         car = Car.objects.first()
         car.index_to_appsearch(update_only=True)
