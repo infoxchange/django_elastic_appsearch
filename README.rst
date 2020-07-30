@@ -141,6 +141,44 @@ Delete all cars where the make is 'Saab' from app search
     cars = Car.objects.filter(make='Saab')
     cars.delete_from_appsearch()
 
+``index_to_appsearch`` methods on the QuerySet and your model also supports an optional ``update_only`` parameter which takes in a boolean value. If ``update_only`` is set to ``True``, the operation on the app search instance will be carried out as a ``PATCH`` operation. This will be useful if your Django application is only doing partial updates to the documents.
+
+This will also mean that your serialisers can contain a subset of the fields for a document. This will be useful when two Django models/applications are using the same app search engine to update different sets of fields on a single document type.
+
+Example below (Continued from the above ``Car`` example):
+
+.. code-block:: python
+
+    from django.db import models
+    from django_elastic_appsearch.orm import AppSearchModel
+    from django_elastic_appsearch import serialisers
+
+    class CarVINNumberSerialiser(serialisers.AppSearchSerialiser):
+        vin_number = serialisers.StrField()
+
+    class CarVINNumber(AppSearchModel):
+
+        class AppsearchMeta:
+            appsearch_engine_name = 'cars'
+            appsearch_serialiser_class = CarVINNumberSerialiser
+
+        car = models.OneToOneField()
+        vin_number = models.CharField(max_length=100)
+
+.. code-block:: python
+
+    from mymodels import CarVINNumber
+
+    car_vin = CarVINNumber.objects.filter('car__id'=25).first()
+    car_vin.vin_number = '1M8GDM9A_KP042788'
+    car_vin.save()
+    car_vin.refresh_from_db()
+    car_vin.index_to_appsearch(update_only=True)
+
+The above example will update the car document with id 25 with the new VIN number and leave the data for the rest of the fields intact.
+
+Important note: ``PATCH`` operations on Elastic App Search cannot create new schema fields if you submit schema fields currently unknown to your engine. So always make sure you're submitting values for existing schema fields on your engine.
+
 Use with your own custom queryset managers
 ==========================================
 
