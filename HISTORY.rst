@@ -3,6 +3,13 @@
 History
 -------
 
+0.7.0 (2020-07-30)
+===================
+
+* Implement ability to do partial updates to documents
+* Dependency upgrades
+
+
 0.6.11 (2020-06-22)
 ===================
 
