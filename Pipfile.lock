@@ -30,10 +30,10 @@
         },
         "elastic-app-search": {
             "hashes": [
-                "sha256:4255cae3e17ed5d5b9442daf2e70dec9ffcf6de1d09106b84ba9ffa220d55699"
+                "sha256:cb57ffbaca6a006804063d09c57aaf6891e0a7f2867fe538218b37a3acb0a302"
             ],
             "index": "pypi",
-            "version": "==7.8.0"
+            "version": "==7.8.1"
         },
         "idna": {
             "hashes": [
