@@ -27,17 +27,23 @@ class AppSearchQuerySet(models.QuerySet):
                     [item.get_appsearch_document_id() for item in queryset]
                 )
 
-    def index_to_appsearch(self):
+    def index_to_appsearch(self, update_only=False):
         """Index the queryset."""
         if self and apps.get_app_config('django_elastic_appsearch').enabled:
             engine_name = self.first().get_appsearch_engine_name()
             client = self.first().get_appsearch_client()
             slices = self._get_sliced_queryset()
             for queryset in slices:
-                client.index_documents(
-                    engine_name,
-                    [item.serialise_for_appsearch() for item in queryset]
-                )
+                if update_only:
+                    client.update_documents(
+                        engine_name,
+                        [item.serialise_for_appsearch() for item in queryset]
+                    )
+                else:
+                    client.index_documents(
+                        engine_name,
+                        [item.serialise_for_appsearch() for item in queryset]
+                    )
 
 
 class AppSearchModel(models.Model):
@@ -84,13 +90,19 @@ class AppSearchModel(models.Model):
         """Get the unique document ID."""
         return '{}_{}'.format(type(self).__name__, self.pk)
 
-    def index_to_appsearch(self):
+    def index_to_appsearch(self, update_only=False):
         """Index the object to appsearch."""
         if apps.get_app_config('django_elastic_appsearch').enabled:
-            self.get_appsearch_client().index_documents(
-                self.get_appsearch_engine_name(),
-                [self.serialise_for_appsearch()]
-            )
+            if update_only:
+                self.get_appsearch_client().update_documents(
+                    self.get_appsearch_engine_name(),
+                    [self.serialise_for_appsearch()]
+                )
+            else:
+                self.get_appsearch_client().index_documents(
+                    self.get_appsearch_engine_name(),
+                    [self.serialise_for_appsearch()]
+                )
 
     def delete_from_appsearch(self):
         """Delete the object from appsearch."""
