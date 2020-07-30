@@ -35,6 +35,12 @@ class TestORM(BaseElasticAppSearchClientTestCase):
         car.index_to_appsearch()
         self.assertEqual(self.client_index.call_count, 1)
 
+    def test_model_object_index(self):
+        """Test indexing a model object to appsearch as an update operation."""
+        car = Car.objects.first()
+        car.index_to_appsearch(update_only=True)
+        self.assertEqual(self.client_update.call_count, 1)
+
     def test_model_object_delete(self):
         """Test deleting a model object from appsearch."""
         car = Car.objects.first()
@@ -48,6 +54,14 @@ class TestORM(BaseElasticAppSearchClientTestCase):
         # Note that the app search chunk size is set to 5 in `tests.settings`
         # Therefore you should see 5 calls to cover 22 documents
         self.assertEqual(self.client_index.call_count, 5)
+
+    def test_queryset_update(self):
+        """Test indexing a queryset to appsearch as an update operation."""
+        car = Car.objects.all()
+        car.index_to_appsearch(update_only=True)
+        # Note that the app search chunk size is set to 5 in `tests.settings`
+        # Therefore you should see 5 calls to cover 22 documents
+        self.assertEqual(self.client_update.call_count, 5)
 
     def test_queryset_delete(self):
         """Test deleting a queryset from appsearch."""
