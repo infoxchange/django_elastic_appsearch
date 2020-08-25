@@ -36,7 +36,7 @@ Dependencies
 ------------
 
 * Python >= 3.6
-* Django >= 2.0
+* Django >= 2.2
 * `elastic-app-search <https://pypi.org/project/elastic-app-search/>`_
 * `serpy <https://pypi.org/project/serpy/>`_
 
