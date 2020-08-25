@@ -3,6 +3,14 @@
 History
 -------
 
+0.7.3 (2020-08-25)
+===================
+
+* Remove support for Django 2.0 and Django 2.1
+* Add support for Django 3.1
+* Update documentation
+
+
 0.7.2 (2020-08-25)
 ===================
 
