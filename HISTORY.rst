@@ -3,10 +3,16 @@
 History
 -------
 
+0.7.2 (2020-08-25)
+===================
+
+* Dependency upgrades
+
+
 0.7.1 (2020-07-31)
 ===================
 
-* Dependency upgrade
+* Dependency upgrades
 
 
 0.7.0 (2020-07-30)
