@@ -40,4 +40,12 @@ class DjangoAppSearchConfig(AppConfig):
         if self.api_v1_base_endpoint is None or self.api_key is None:
             self.enabled = False
 
+        # Whether to use signals to index on save/delete
+        # If True, signals attached even if APPSEARCH_INDEXING_ENABLED is False
+        # However, APPSEARCH_INDEXING_ENABLED still determines
+        # whether an index operation will occur
+        self.auto_indexing = getattr(
+            settings, 'APPSEARCH_AUTOINDEXING_ENABLED', True
+        )
+
         super().__init__(*args, **kwargs)
