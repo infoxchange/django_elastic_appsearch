@@ -6,6 +6,8 @@
 from django.test import TestCase
 from django.utils import timezone
 
+from django_elastic_appsearch.decorators import disable_auto_indexing
+
 from example.models import Car
 from example.serialisers import CarSerialiser
 
@@ -13,6 +15,7 @@ from example.serialisers import CarSerialiser
 class TestAppSearchSerialiser(TestCase):
     """Test serialisers."""
 
+    @disable_auto_indexing(Car)
     def test_app_search_serialiser(self):
         """Test the `AppSearchSerialiser`."""
 

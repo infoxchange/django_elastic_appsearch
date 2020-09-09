@@ -12,6 +12,7 @@ from django.utils import timezone
 from django.test import override_settings
 
 from django_elastic_appsearch.apps import DjangoAppSearchConfig
+from django_elastic_appsearch.decorators import disable_auto_indexing
 
 from example.models import Car
 
@@ -102,6 +103,7 @@ class TestDjangoElasticAppSearchSettings(BaseElasticAppSearchClientTestCase):
         )
         self.assertFalse(config.enabled)
 
+    @disable_auto_indexing(Car)
     @override_settings(APPSEARCH_INDEXING_ENABLED=False)
     def test_disabling_indexing(self):
         """Test disabling app search indexing."""
@@ -134,3 +136,12 @@ class TestDjangoElasticAppSearchSettings(BaseElasticAppSearchClientTestCase):
 
             self.assertEqual(self.client_index.call_count, 0)
             self.assertEqual(self.client_destroy.call_count, 0)
+
+    @override_settings(APPSEARCH_AUTOINDEXING_ENABLED=False)
+    def test_appsearch_autoindexing_enabled_setting(self):
+        """Test `APPSEARCH_INDEXING_ENABLED` setting."""
+        config = DjangoAppSearchConfig(
+            app_name=self.original_config.name,
+            app_module=self.original_config.module
+        )
+        self.assertFalse(config.auto_indexing)

@@ -6,6 +6,7 @@
 from django.test import TestCase
 from django.utils import timezone
 from django_elastic_appsearch.test import MockedAppSearchTestCase
+from django_elastic_appsearch.decorators import disable_auto_indexing
 
 from example.models import Car
 
@@ -13,6 +14,7 @@ from example.models import Car
 class TestMockedAppSearchTestCase(MockedAppSearchTestCase, TestCase):
     """Test the `MockedAppSearchTestCase`."""
 
+    @disable_auto_indexing(Car)
     def setUp(self, *args, **kwargs):
         """Load test data."""
         super().setUp(*args, **kwargs)
