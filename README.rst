@@ -264,6 +264,18 @@ This is an **optional** setting to configure if you want to disable indexing to 
 
     APPSEARCH_INDEXING_ENABLED = True
 
+APPSEARCH_AUTOINDEXING_ENABLED
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+* Required: No
+* Default: ``True``
+
+This is an **optional** setting to configure if you want to disable auto indexing to your Elastic App Search instance. When it's set to ``True``, a ``post_save`` and ``post_delete`` signal are attached to your model inheriting from ``AppSearchModel``. These signals automatically call ``index_to_appsearch()`` and ``delete_from_appsearch()`` when saving and deleting. When this setting is set to ``False``, you must use ``index_to_appsearch()`` or ``delete_from_appsearch()`` to perform indexing operations. If ``APPSEARCH_INDEXING_ENABLED`` (above) is set to ``False`` while ``APPSEARCH_INDEXING_ENABLED`` is ``True``, the signals will still be attached, but no operations will be performed.
+
+.. code-block:: python
+
+    APPSEARCH_AUTOINDEXING_ENABLED = True
+
 Example with all settings entries
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
