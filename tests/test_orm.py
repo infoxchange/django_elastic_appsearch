@@ -6,8 +6,6 @@
 from django.utils import timezone
 from django_elastic_appsearch import serialisers
 
-from django_elastic_appsearch.decorators import disable_auto_indexing
-
 from example.models import Car
 from example.serialisers import CarSerialiser
 
@@ -17,7 +15,6 @@ from .base import BaseElasticAppSearchClientTestCase
 class TestORM(BaseElasticAppSearchClientTestCase):
     """Test Django Elastic App Search ORM functions."""
 
-    @disable_auto_indexing(Car)
     def setUp(self):
         """Setup the patches and test data."""
         super().setUp()

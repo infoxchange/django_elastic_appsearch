@@ -103,7 +103,6 @@ class TestDjangoElasticAppSearchSettings(BaseElasticAppSearchClientTestCase):
         )
         self.assertFalse(config.enabled)
 
-    @disable_auto_indexing(Car)
     @override_settings(APPSEARCH_INDEXING_ENABLED=False)
     def test_disabling_indexing(self):
         """Test disabling app search indexing."""

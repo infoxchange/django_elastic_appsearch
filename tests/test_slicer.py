@@ -7,7 +7,6 @@ from django.test import TestCase
 from django.utils import timezone
 
 from django_elastic_appsearch.slicer import slice_queryset
-from django_elastic_appsearch.decorators import disable_auto_indexing
 
 from example.models import Car
 
@@ -15,7 +14,6 @@ from example.models import Car
 class TestSlicer(TestCase):
     """Test Queryset slicer."""
 
-    @disable_auto_indexing(Car)
     def setUp(self, *args, **kwargs):
         """Add the test cars."""
         # Create 22 cars
