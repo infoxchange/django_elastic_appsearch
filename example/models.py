@@ -18,6 +18,7 @@ class Car(AppSearchModel):
     model = models.TextField()
     year_manufactured = models.DateTimeField()
 
+
 class Bus(Car):
     """A bus"""
     class AppsearchMeta:
