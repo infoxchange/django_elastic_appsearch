@@ -18,13 +18,9 @@ class Car(AppSearchModel):
     model = models.TextField()
     year_manufactured = models.DateTimeField()
 
-class Bus(AppSearchModel):
+class Bus(Car):
     """A bus"""
     class AppsearchMeta:
         appsearch_engine_name = 'bus'
-        appsearch_serialiser_class = CarSerialiser
 
-    make = models.TextField()
-    model = models.TextField()
-    year_manufactured = models.DateTimeField()
     objects = CustomQuerySet.as_manager()
