@@ -3,6 +3,13 @@
 History
 -------
 
+0.7.4 (2020-10-05)
+===================
+
+* Add support for testing overridden queryset methods
+* Update documentation
+
+
 0.7.3 (2020-08-25)
 ===================
 
