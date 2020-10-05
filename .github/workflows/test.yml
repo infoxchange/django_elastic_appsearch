@@ -29,4 +29,4 @@ jobs:
       - name: Run tests
         run: tox -e ${{ matrix.tox-env }}
       - name: Coverage report
-        run: codecov -e ${{ matrix.tox-env }} -t ${{ secrets.CODECOV_TOKEN }}
+        run: codecov -e ${{ matrix.tox-env }}

@@ -8,7 +8,35 @@ from django.utils import timezone
 from django_elastic_appsearch.test import MockedAppSearchTestCase
 from django_elastic_appsearch.decorators import disable_auto_indexing
 
-from example.models import Car
+from example.models import Car, Bus
+
+
+class TestMockedAppSearchWithCustomQuerySetTestCase(MockedAppSearchTestCase, TestCase):
+    """Test the `MockedAppSearchTestCase`."""
+
+    def setUp(self, *args, **kwargs):
+        """Load test data."""
+        kwargs['queryset_class'] = 'example.querysets.CustomQuerySet.'
+        super().setUp(*args, **kwargs)
+        timezone_now = timezone.now()
+        bus1 = Bus(
+            make='Volvo',
+            model='Volgren Optimus',
+            year_manufactured=timezone_now
+        )
+        bus1.save()
+
+    def test_mocked_index_queryset_to_appsearch(self):
+        """Test indexing a queryset to App Search is mocked."""
+
+        Bus.objects.all().index_to_appsearch()
+        self.assertAppSearchQuerySetIndexCallCount(1)
+
+    def test_mocked_delete_queryset_from_appsearch(self):
+        """Test deleting a queryset from App Search is mocked."""
+
+        Bus.objects.all().delete_from_appsearch()
+        self.assertAppSearchQuerySetDeleteCallCount(1)
 
 
 class TestMockedAppSearchTestCase(MockedAppSearchTestCase, TestCase):

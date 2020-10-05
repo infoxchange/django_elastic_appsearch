@@ -16,3 +16,4 @@ tox = "*"
 [packages]
 elastic-app-search = "*"
 serpy = "*"
+django = "*"

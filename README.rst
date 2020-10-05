@@ -353,6 +353,22 @@ You will have access to the following methods to check call counts to different 
 
 ``self.assertAppSearchModelDeleteCallCount`` — Check the number of times delete_from_appsearch was called on an appsearch model objects.
 
+If you are using a subclass of `AppSearchQuerySet` that overrides methods without calling the super class version you can use the `queryset_class` key word argument to the `setUp` function to mock it. Example below.
+
+.. code-block:: python
+
+    from django.test import TestCase
+    from django_elastic_appsearch.test import MockedAppSearchTestCase
+
+    class BusTestCase(MockedAppSearchTestCase, TestCase):
+        """Test the `MockedAppSearchTestCase`."""
+
+        def setUp(self, *args, **kwargs):
+            """Load test data."""
+            kwargs['queryset_class'] = 'example.querysets.CustomQuerySet.'
+            super().setUp(*args, **kwargs)
+
+
 Using the elastic app search python client
 ==========================================
 

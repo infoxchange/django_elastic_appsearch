@@ -50,16 +50,17 @@ class MockedAppSearchTestCase:
     app search models. The counts will reset for each test method.
     """
 
-    def setUp(self):
+    def setUp(self, *args, **kwargs):
         """Setup app search mocks."""
+        queryset_class = kwargs.get('queryset_class', 'django_elastic_appsearch.orm.AppSearchQuerySet.')
+
         queryset_index_to_appsearch = patch(
-            'django_elastic_appsearch.orm.AppSearchQuerySet.'
-            'index_to_appsearch'
+            f'{queryset_class}index_to_appsearch'
         )
         queryset_delete_from_appsearch = patch(
-            'django_elastic_appsearch.orm.AppSearchQuerySet.'
-            'delete_from_appsearch'
+            f'{queryset_class}delete_from_appsearch'
         )
+
         model_index_to_appsearch = patch(
             'django_elastic_appsearch.orm.AppSearchModel.index_to_appsearch'
         )
