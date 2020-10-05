@@ -45,7 +45,7 @@ class DjangoAppSearchConfig(AppConfig):
         # However, APPSEARCH_INDEXING_ENABLED still determines
         # whether an index operation will occur
         self.auto_indexing = getattr(
-            settings, 'APPSEARCH_AUTOINDEXING_ENABLED', True
+            settings, 'APPSEARCH_AUTOINDEXING_ENABLED', False
         )
 
         super().__init__(*args, **kwargs)
