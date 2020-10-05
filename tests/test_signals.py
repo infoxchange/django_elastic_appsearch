@@ -3,19 +3,26 @@
 
 """Test cases for save/delete signals."""
 
-from django.test import TestCase
+from django.test import TestCase, override_settings
 from django.db.models.signals import post_save, post_delete
 
 from django_elastic_appsearch.signals import post_save_receiver
 from django_elastic_appsearch.signals import post_delete_receiver
-
 from django_elastic_appsearch.decorators import disable_auto_indexing
 
 from example.models import Car
 
 
-class TestSignals(TestCase):
-    """Test signals."""
+class TestAutoIndexingSignals(TestCase):
+    """Test auto-indexing signals."""
+
+    def setUp(self):
+        """Setup."""
+        super().setUp()
+
+        # Mock auto-index enabled
+        post_save.connect(post_save_receiver, sender=Car)
+        post_delete.connect(post_delete_receiver, sender=Car)
 
     def test_auto_indexing_signals(self):
         """Test if the save/delete signals are connected/disconnected."""
