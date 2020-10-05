@@ -4,6 +4,7 @@ from django.db import models
 from django_elastic_appsearch.orm import AppSearchModel
 
 from example.serialisers import CarSerialiser
+from example.querysets import CustomQuerySet
 
 
 class Car(AppSearchModel):
@@ -16,3 +17,11 @@ class Car(AppSearchModel):
     make = models.TextField()
     model = models.TextField()
     year_manufactured = models.DateTimeField()
+
+
+class Bus(Car):
+    """A bus"""
+    class AppsearchMeta:
+        appsearch_engine_name = 'bus'
+
+    objects = CustomQuerySet.as_manager()
