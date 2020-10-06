@@ -43,3 +43,13 @@ class TestAutoIndexingSignals(TestCase):
             self.assertFalse(
                 post_delete.disconnect(post_delete_receiver, sender=Car)
             )
+
+        # Tests that the decorator obeys default auto_indexing setting of False
+        # Returns false because signal should not be attached by default
+        # after context manager exits.
+        self.assertFalse(
+            post_save.disconnect(post_save_receiver, sender=Car)
+        )
+        self.assertFalse(
+            post_delete.disconnect(post_delete_receiver, sender=Car)
+        )
