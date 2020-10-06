@@ -3,7 +3,7 @@
 
 """Test cases for save/delete signals."""
 
-from django.test import TestCase
+from django.test import TestCase, override_settings
 from django.db.models.signals import post_save, post_delete
 
 from django_elastic_appsearch.signals import post_save_receiver
@@ -21,10 +21,12 @@ class TestAutoIndexingSignals(TestCase):
         super().setUp()
 
         # Mock auto-index enabled
+        # This needs to be done manually even with overriding the setting
         post_save.connect(post_save_receiver, sender=Car)
         post_delete.connect(post_delete_receiver, sender=Car)
 
-    def test_auto_indexing_signals(self):
+    @override_settings(APPSEARCH_AUTOINDEXING_ENABLED=True)
+    def test_auto_indexing_signals_enabled(self):
         """Test if the save/delete signals are connected/disconnected."""
 
         # disconnect() returns True if the signal is attached
@@ -44,8 +46,22 @@ class TestAutoIndexingSignals(TestCase):
                 post_delete.disconnect(post_delete_receiver, sender=Car)
             )
 
+        # When context manager exists, signals should be re-attached
+        self.assertTrue(
+            post_save.disconnect(post_save_receiver, sender=Car)
+        )
+        self.assertTrue(
+            post_delete.disconnect(post_delete_receiver, sender=Car)
+        )
+
+    def test_auto_indexing_signals_disabled(self):
+        """Test if the save/delete signals remain disconnected."""
+
+        with disable_auto_indexing(Car):
+            pass
+
         # Tests that the decorator obeys default auto_indexing setting of False
-        # Returns false because signal should not be attached by default
+        # Returns false because signal should not be re-attached by default
         # after context manager exits.
         self.assertFalse(
             post_save.disconnect(post_save_receiver, sender=Car)
