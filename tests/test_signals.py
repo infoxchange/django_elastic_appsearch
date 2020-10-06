@@ -5,6 +5,7 @@
 
 from django.test import TestCase, override_settings
 from django.db.models.signals import post_save, post_delete
+from django.utils import timezone
 
 from django_elastic_appsearch.signals import post_save_receiver
 from django_elastic_appsearch.signals import post_delete_receiver
@@ -12,8 +13,11 @@ from django_elastic_appsearch.decorators import disable_auto_indexing
 
 from example.models import Car
 
+from .base import BaseElasticAppSearchClientTestCase
 
-class TestAutoIndexingSignals(TestCase):
+
+@override_settings(APPSEARCH_AUTOINDEXING_ENABLED=True)
+class TestAutoIndexingSignals(BaseElasticAppSearchClientTestCase):
     """Test auto-indexing signals."""
 
     def setUp(self):
@@ -25,7 +29,6 @@ class TestAutoIndexingSignals(TestCase):
         post_save.connect(post_save_receiver, sender=Car)
         post_delete.connect(post_delete_receiver, sender=Car)
 
-    @override_settings(APPSEARCH_AUTOINDEXING_ENABLED=True)
     def test_auto_indexing_signals_enabled(self):
         """Test if the save/delete signals are connected/disconnected."""
 
@@ -54,6 +57,7 @@ class TestAutoIndexingSignals(TestCase):
             post_delete.disconnect(post_delete_receiver, sender=Car)
         )
 
+    @override_settings(APPSEARCH_AUTOINDEXING_ENABLED=False)
     def test_auto_indexing_signals_disabled(self):
         """Test if the save/delete signals remain disconnected."""
 
@@ -69,3 +73,17 @@ class TestAutoIndexingSignals(TestCase):
         self.assertFalse(
             post_delete.disconnect(post_delete_receiver, sender=Car)
         )
+
+    def test_auto_indexing(self):
+        """Test auto-indexing a model object to appsearch."""
+        car = Car(
+            make='Toyota',
+            model='Corolla',
+            year_manufactured=timezone.now()
+        )
+
+        car.save()
+        self.assertEqual(self.client_index.call_count, 1)
+
+        car.delete()
+        self.assertEqual(self.client_destroy.call_count, 1)

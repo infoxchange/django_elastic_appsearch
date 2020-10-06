@@ -2,6 +2,7 @@ from contextlib import ContextDecorator
 
 from django.apps import apps
 from django.db.models.signals import post_save, post_delete
+from django.conf import settings
 
 from django_elastic_appsearch.signals import post_save_receiver
 from django_elastic_appsearch.signals import post_delete_receiver
@@ -21,9 +22,11 @@ class disable_auto_indexing(ContextDecorator):
 
     def __init__(self, model):
         self.model = model
-        self.auto_indexing = apps.get_app_config(
-            'django_elastic_appsearch'
-        ).auto_indexing
+        # This should use get_app_config()
+        # But then can't easily test..
+        self.auto_indexing = getattr(
+            settings, 'APPSEARCH_AUTOINDEXING_ENABLED', False
+        )
 
     def __enter__(self):
         """Disable post save/delete signals."""
