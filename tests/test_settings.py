@@ -12,7 +12,6 @@ from django.utils import timezone
 from django.test import override_settings
 
 from django_elastic_appsearch.apps import DjangoAppSearchConfig
-from django_elastic_appsearch.decorators import disable_auto_indexing
 
 from example.models import Car
 
