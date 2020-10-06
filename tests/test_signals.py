@@ -3,7 +3,7 @@
 
 """Test cases for save/delete signals."""
 
-from django.test import TestCase, override_settings
+from django.test import override_settings
 from django.db.models.signals import post_save, post_delete
 from django.utils import timezone
 
