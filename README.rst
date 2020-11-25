@@ -199,6 +199,30 @@ If you want to specify custom managers which also has this functionality, you ca
         # Set the custom manager
         objects = MyCustomQuerySetManager.as_manager()
 
+Use a custom document id for appsearch
+==========================================
+
+By default, the unique document ID which identifies your model objects in app search is set to ``<model_name>_<object_id>``. If we take the car example above, a ``Car`` object with an id of ``543`` will have the document ID ``Car_543`` in app search.
+
+You can customise this value by overriding the ``get_appsearch_document_id`` method on your model class.
+
+Eg. You can do the following to make sure that the document ID on appsearch is exactly the same as the ID on your model object.
+
+.. code-block:: python
+
+    class Car(AppSearchModel):
+
+        class AppsearchMeta:
+            appsearch_engine_name = 'cars'
+            appsearch_serialiser_class = CarSerialiser
+
+        make = models.CharField(max_length=100)
+        model = models.CharField(max_length=100)
+        manufactured_year = models.CharField(max_length=4)
+
+        def get_appsearch_document_id(self):
+            return self.id
+
 Settings
 ========
 
