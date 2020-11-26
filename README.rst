@@ -143,7 +143,7 @@ Delete all cars where the make is 'Saab' from app search
 
 ``index_to_appsearch`` methods on the QuerySet and your model also supports an optional ``update_only`` parameter which takes in a boolean value. If ``update_only`` is set to ``True``, the operation on the app search instance will be carried out as a ``PATCH`` operation. This will be useful if your Django application is only doing partial updates to the documents.
 
-This will also mean that your serialisers can contain a subset of the fields for a document. This will be useful when two Django models/applications are using the same app search engine to update different sets of fields on a single document type.
+This will also mean that your serialisers can contain a subset of the fields for a document. This will be useful when two or more Django models or applications are using the same app search engine to update different sets of fields on a single document type.
 
 Example below (Continued from the above ``Car`` example):
 
@@ -162,8 +162,15 @@ Example below (Continued from the above ``Car`` example):
             appsearch_engine_name = 'cars'
             appsearch_serialiser_class = CarVINNumberSerialiser
 
-        car = models.OneToOneField()
+        car = models.OneToOneField(
+            Car,
+            on_delete=models.CASCADE,
+            primary_key=True
+        )
         vin_number = models.CharField(max_length=100)
+
+        def get_appsearch_document_id(self):
+            return 'Car_{}'.format(self.car.id)
 
 .. code-block:: python
 
@@ -174,6 +181,8 @@ Example below (Continued from the above ``Car`` example):
     car_vin.save()
     car_vin.refresh_from_db()
     car_vin.index_to_appsearch(update_only=True)
+
+You'll notice that we've set the ``appsearch_engine_name`` to ``cars`` so that the VIN number updates will go through to the same engine. You'll also notice that we've overridden the ``get_appsearch_document_id`` method to make sure that VIN number updates do go through the same related car document.
 
 The above example will update the car document with id 25 with the new VIN number and leave the data for the rest of the fields intact.
 
