@@ -3,6 +3,13 @@
 History
 -------
 
+1.0.0 (2020-11-26)
+===================
+
+* Python 3.9 support
+* Update the project status to stable
+
+
 0.7.6 (2020-11-26)
 ===================
 
