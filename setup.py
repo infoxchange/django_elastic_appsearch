@@ -64,11 +64,10 @@ setup(
     zip_safe=False,
     keywords='django_elastic_appsearch',
     classifiers=[
-        'Development Status :: 4 - Beta',
-        'Framework :: Django :: 2.0',
-        'Framework :: Django :: 2.1',
+        'Development Status :: 5 - Production/Stable',
         'Framework :: Django :: 2.2',
         'Framework :: Django :: 3.0',
+        'Framework :: Django :: 3.1',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: MIT License',
         'Natural Language :: English',
