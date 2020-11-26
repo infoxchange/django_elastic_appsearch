@@ -17,3 +17,7 @@ tox = "*"
 elastic-app-search = "*"
 serpy = "*"
 django = "*"
+elastic-enterprise-search = "*"
+
+[pipenv]
+allow_prereleases = true
