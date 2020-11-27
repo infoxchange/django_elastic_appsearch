@@ -3,7 +3,10 @@
 from django.apps import apps
 from django.db import models
 
-from django_elastic_appsearch.clients import get_api_v1_enterprise_search_client
+from django_elastic_appsearch.clients import (
+    get_api_v1_client,
+    get_api_v1_enterprise_search_client
+)
 from django_elastic_appsearch.slicer import slice_queryset
 
 
