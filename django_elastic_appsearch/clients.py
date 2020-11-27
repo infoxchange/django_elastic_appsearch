@@ -19,6 +19,7 @@ def get_api_v1_client():
         use_https=use_https
     )
 
+
 def get_api_v1_enterprise_search_client():
     """Return the enterprise-search appsearch client."""
     config = apps.get_app_config('django_elastic_appsearch')
