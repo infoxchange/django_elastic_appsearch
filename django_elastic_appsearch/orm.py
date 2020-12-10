@@ -1,5 +1,6 @@
 """ORM features for Elastic App Search."""
 
+import warnings
 from django.apps import apps
 from django.db import models
 
@@ -82,6 +83,12 @@ class AppSearchModel(models.Model):
     @classmethod
     def get_appsearch_client(cls):
         """Get the App Search client."""
+        warnings.warn(
+            "`get_appsearch_client` is deprecated and will be removed in a future "
+            "release. Please configure your application to use "
+            "`get_enterprise_search_appsearch_client` instead.",
+            DeprecationWarning
+        )
         return get_api_v1_client()
 
     @classmethod

@@ -1,5 +1,6 @@
 """Django App Search Client utilities."""
 
+import warnings
 from django.apps import apps
 from elastic_app_search import Client
 from elastic_enterprise_search import AppSearch
@@ -7,6 +8,12 @@ from elastic_enterprise_search import AppSearch
 
 def get_api_v1_client():
     """Return the app search client."""
+    warnings.warn(
+        "`get_api_v1_client` is deprecated and will be removed in a future release. "
+        "Please configure your application to use "
+        "`get_api_v1_enterprise_search_client` instead.",
+        DeprecationWarning
+    )
     config = apps.get_app_config('django_elastic_appsearch')
 
     base_endpoint = config.api_v1_base_endpoint
