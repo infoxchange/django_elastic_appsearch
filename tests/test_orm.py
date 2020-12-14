@@ -5,6 +5,8 @@
 
 from django.utils import timezone
 from django_elastic_appsearch import serialisers
+from elastic_app_search import Client
+from elastic_enterprise_search import AppSearch
 
 from example.models import Car
 from example.serialisers import CarSerialiser
@@ -28,6 +30,16 @@ class TestORM(BaseElasticAppSearchClientTestCase):
                 year_manufactured=timezone_now
             )
             car.save()
+
+    def test_get_appsearch_client(self):
+        """Test `get_appsearch_client` class method."""
+        client = Car.objects.first().get_appsearch_client()
+        self.assertIsInstance(client, Client)
+
+    def test_get_enterprise_search_appsearch_client(self):
+        """Test `get_enterprise_search_appsearch_client` class method."""
+        client = Car.objects.first().get_enterprise_search_appsearch_client()
+        self.assertIsInstance(client, AppSearch)
 
     def test_model_object_index(self):
         """Test indexing a model object to appsearch."""
