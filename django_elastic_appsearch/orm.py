@@ -94,12 +94,12 @@ class AppSearchModel(models.Model):
         """Index the object to appsearch."""
         if apps.get_app_config('django_elastic_appsearch').enabled:
             if update_only:
-                self.get_appsearch_client().update_documents(
+                return self.get_appsearch_client().update_documents(
                     self.get_appsearch_engine_name(),
                     [self.serialise_for_appsearch()]
                 )
             else:
-                self.get_appsearch_client().index_documents(
+                return self.get_appsearch_client().index_documents(
                     self.get_appsearch_engine_name(),
                     [self.serialise_for_appsearch()]
                 )
@@ -107,7 +107,7 @@ class AppSearchModel(models.Model):
     def delete_from_appsearch(self):
         """Delete the object from appsearch."""
         if apps.get_app_config('django_elastic_appsearch').enabled:
-            self.get_appsearch_client().destroy_documents(
+            return self.get_appsearch_client().destroy_documents(
                 self.get_appsearch_engine_name(),
                 [self.get_appsearch_document_id()]
             )
