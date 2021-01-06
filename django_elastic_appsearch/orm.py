@@ -59,14 +59,14 @@ class SuperAppSearchModel(models.Model):
         """Get the App Search client."""
         return get_api_v1_client()
 
-    def serialise_for_appsearch(self):
-        pass
-
     def get_appsearch_document_id(self):
         """Get the unique document ID."""
         return "{}_{}".format(type(self).__name__, self.pk)
 
     def index_to_appsearch(self, update_only=False):
+        pass
+
+    def serialise_for_appsearch(self):
         pass
 
     def delete_from_appsearch(self):
@@ -126,7 +126,7 @@ class AppSearchModel(SuperAppSearchModel):
             )
 
 
-class AppSearchMultiEngineModel(models.Model):
+class AppSearchMultiEngineModel(SuperAppSearchModel):
     class Meta:
         """Meta options for the app search model."""
 
@@ -139,3 +139,14 @@ class AppSearchMultiEngineModel(models.Model):
     @classmethod
     def get_appsearch_serialiser_engine_pairs(cls):
         return cls.AppsearchMeta.appsearch_serialiser_engine_pairs
+
+    def index_to_appsearch(self, update_only=False):
+        pass
+
+    def serialise_for_appsearch(self):
+        "Serialise the instance for appsearch."""
+        _pairs = self.get_appsearch_serialiser_engine_pairs()
+        return [serialiser(self).data for (serialiser, _) in _pairs]
+
+    def delete_from_appsearch(self):
+        pass

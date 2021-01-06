@@ -19,11 +19,11 @@ class Car(AppSearchModel):
     year_manufactured = models.DateTimeField()
 
 
-class MultipleEngineCar(AppSearchMultiEngineModel):
-    """A car."""
+class Truck(AppSearchMultiEngineModel):
+    """A truck."""
 
     class AppsearchMeta:
-        appsearch_serialiser_engine_pairs = [(CarSerialiser, "cars")]
+        appsearch_serialiser_engine_pairs = [(CarSerialiser, "trucks")]
 
     make = models.TextField()
     model = models.TextField()
@@ -32,7 +32,8 @@ class MultipleEngineCar(AppSearchMultiEngineModel):
 
 class Bus(Car):
     """A bus"""
+
     class AppsearchMeta:
-        appsearch_engine_name = 'bus'
+        appsearch_engine_name = "bus"
 
     objects = CustomQuerySet.as_manager()
