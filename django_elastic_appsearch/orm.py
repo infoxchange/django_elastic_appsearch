@@ -18,14 +18,14 @@ class AppSearchQuerySet(models.QuerySet):
     def delete_from_appsearch(self):
         """Delete from appsearch."""
         if self and apps.get_app_config('django_elastic_appsearch').enabled:
-            engine_name = self.first().get_appsearch_engine_name()
-            client = self.first().get_appsearch_client()
-            slices = self._get_sliced_queryset()
-            for queryset in slices:
-                client.destroy_documents(
-                    engine_name,
-                    [item.get_appsearch_document_id() for item in queryset]
-                )
+            for (_, engine_name) in self.first().get_appsearch_serialiser_engine_pairs():
+                client = self.first().get_appsearch_client()
+                slices = self._get_sliced_queryset()
+                for queryset in slices:
+                    client.destroy_documents(
+                        engine_name,
+                        [item.get_appsearch_document_id() for item in queryset]
+                    )
 
     def index_to_appsearch(self, update_only=False):
         """Index the queryset."""
@@ -70,7 +70,12 @@ class SuperAppSearchModel(models.Model):
         pass
 
     def delete_from_appsearch(self):
-        pass
+        """Delete the object from appsearch."""
+        if apps.get_app_config("django_elastic_appsearch").enabled:
+            for (_, engine_name) in self.get_appsearch_serialiser_engine_pairs():
+                return self.get_appsearch_client().destroy_documents(
+                    engine_name, [self.get_appsearch_document_id()]
+                )
 
     @classmethod
     def get_appsearch_serialiser_engine_pairs(cls):
@@ -126,13 +131,6 @@ class AppSearchModel(SuperAppSearchModel):
                     self.get_appsearch_engine_name(), [self.serialise_for_appsearch()]
                 )
 
-    def delete_from_appsearch(self):
-        """Delete the object from appsearch."""
-        if apps.get_app_config("django_elastic_appsearch").enabled:
-            return self.get_appsearch_client().destroy_documents(
-                self.get_appsearch_engine_name(), [self.get_appsearch_document_id()]
-            )
-
 
 class AppSearchMultiEngineModel(SuperAppSearchModel):
     class Meta:
@@ -158,6 +156,3 @@ class AppSearchMultiEngineModel(SuperAppSearchModel):
             _pairs = [pair for pair in _pairs if pair[1] == engine_name]
 
         return [serialiser(self).data for (serialiser, _) in _pairs]
-
-    def delete_from_appsearch(self):
-        pass
