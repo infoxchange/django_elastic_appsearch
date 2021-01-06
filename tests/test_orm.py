@@ -6,7 +6,7 @@
 from django.utils import timezone
 from django_elastic_appsearch import serialisers
 
-from example.models import Car
+from example.models import Car, MultipleEngineCar
 from example.serialisers import CarSerialiser
 
 from .base import BaseElasticAppSearchClientTestCase
@@ -103,3 +103,33 @@ class TestORM(BaseElasticAppSearchClientTestCase):
 
         # Reset it back to the original
         Car.set_appsearch_engine_name(original_engine_name)
+
+
+class TestMultipleEngineModel(BaseElasticAppSearchClientTestCase):
+    def test_set_multiple_serialiser_engine_pairs(self):
+        """Test classmethod to set serialiser and engine pairs"""
+
+        # Define a test serialiser class.
+        class TestSerialiserClass(serialisers.AppSearchSerialiser):
+            test_field = serialisers.Field()
+
+        class OtherSerialiserClass(serialisers.AppSearchSerialiser):
+            other_field = serialisers.Field()
+
+        # Set the new serialiser class to the MultipleEngineCar model.
+        pairs = [
+            (TestSerialiserClass, "test_cars"),
+            (OtherSerialiserClass, "other_cars"),
+        ]
+        MultipleEngineCar.set_appsearch_serialiser_engine_pairs(pairs)
+
+        # Test if its set successfully
+        pairs = MultipleEngineCar.get_appsearch_serialiser_engine_pairs()
+        self.assertEqual(pairs[0][0], TestSerialiserClass)
+        self.assertEqual(pairs[0][1], "test_cars")
+        self.assertEqual(pairs[1][0], OtherSerialiserClass)
+        self.assertEqual(pairs[1][1], "other_cars")
+
+    def test_indexing(self):
+        """ One, none and multiple """
+        pass

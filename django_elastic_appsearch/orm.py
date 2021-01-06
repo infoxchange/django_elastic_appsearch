@@ -132,4 +132,10 @@ class AppSearchMultiEngineModel(models.Model):
 
         abstract = True
 
-    pass
+    @classmethod
+    def set_appsearch_serialiser_engine_pairs(cls, pairs):
+        cls.AppsearchMeta.appsearch_serialiser_engine_pairs = pairs
+
+    @classmethod
+    def get_appsearch_serialiser_engine_pairs(cls):
+        return cls.AppsearchMeta.appsearch_serialiser_engine_pairs
