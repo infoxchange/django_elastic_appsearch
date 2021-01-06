@@ -46,10 +46,35 @@ class AppSearchQuerySet(models.QuerySet):
                     )
 
 
-class AppSearchModel(models.Model):
-    """A model that integrates with Elastic App Search."""
-
+class SuperAppSearchModel(models.Model):
     objects = AppSearchQuerySet.as_manager()
+
+    class Meta:
+        """Meta options for the app search model."""
+
+        abstract = True
+
+    @classmethod
+    def get_appsearch_client(cls):
+        """Get the App Search client."""
+        return get_api_v1_client()
+
+    def serialise_for_appsearch(self):
+        pass
+
+    def get_appsearch_document_id(self):
+        """Get the unique document ID."""
+        return "{}_{}".format(type(self).__name__, self.pk)
+
+    def index_to_appsearch(self, update_only=False):
+        pass
+
+    def delete_from_appsearch(self):
+        pass
+
+
+class AppSearchModel(SuperAppSearchModel):
+    """A model that integrates with Elastic App Search."""
 
     class Meta:
         """Meta options for the app search model."""
@@ -76,38 +101,35 @@ class AppSearchModel(models.Model):
         """Set the app search engine name that maps to this model."""
         cls.AppsearchMeta.appsearch_engine_name = engine_name
 
-    @classmethod
-    def get_appsearch_client(cls):
-        """Get the App Search client."""
-        return get_api_v1_client()
-
     def serialise_for_appsearch(self):
         """Serialise the instance for appsearch."""
         _serialiser = self.get_appsearch_serialiser_class()
         return _serialiser(self).data
 
-    def get_appsearch_document_id(self):
-        """Get the unique document ID."""
-        return '{}_{}'.format(type(self).__name__, self.pk)
-
     def index_to_appsearch(self, update_only=False):
         """Index the object to appsearch."""
-        if apps.get_app_config('django_elastic_appsearch').enabled:
+        if apps.get_app_config("django_elastic_appsearch").enabled:
             if update_only:
                 return self.get_appsearch_client().update_documents(
-                    self.get_appsearch_engine_name(),
-                    [self.serialise_for_appsearch()]
+                    self.get_appsearch_engine_name(), [self.serialise_for_appsearch()]
                 )
             else:
                 return self.get_appsearch_client().index_documents(
-                    self.get_appsearch_engine_name(),
-                    [self.serialise_for_appsearch()]
+                    self.get_appsearch_engine_name(), [self.serialise_for_appsearch()]
                 )
 
     def delete_from_appsearch(self):
         """Delete the object from appsearch."""
-        if apps.get_app_config('django_elastic_appsearch').enabled:
+        if apps.get_app_config("django_elastic_appsearch").enabled:
             return self.get_appsearch_client().destroy_documents(
-                self.get_appsearch_engine_name(),
-                [self.get_appsearch_document_id()]
+                self.get_appsearch_engine_name(), [self.get_appsearch_document_id()]
             )
+
+
+class AppSearchMultiEngineModel(models.Model):
+    class Meta:
+        """Meta options for the app search model."""
+
+        abstract = True
+
+    pass
