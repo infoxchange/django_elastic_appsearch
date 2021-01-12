@@ -73,19 +73,18 @@ class SuperAppSearchModel(models.Model):
     def get_appsearch_serialiser_engine_pairs(cls):
         pass
 
-    def destroy_document(self, engine_name):
+    def _destroy_document(self, engine_name):
         return self.get_appsearch_client().destroy_documents(engine_name, [self.get_appsearch_document_id()])
 
     def _index_to_engine(self, engine_name, update_only):
         if update_only:
-                return self.get_appsearch_client().update_documents(
-                    engine_name, [self.serialise_for_appsearch()]
-                )
+            return self.get_appsearch_client().update_documents(
+                engine_name, [self.serialise_for_appsearch()]
+            )
         else:
             return self.get_appsearch_client().index_documents(
                 engine_name, [self.serialise_for_appsearch()]
             )
-
 
 
 class AppSearchModel(SuperAppSearchModel):
@@ -128,19 +127,12 @@ class AppSearchModel(SuperAppSearchModel):
     def index_to_appsearch(self, update_only=False):
         """Index the object to appsearch."""
         if apps.get_app_config("django_elastic_appsearch").enabled:
-            if update_only:
-                return self.get_appsearch_client().update_documents(
-                    self.get_appsearch_engine_name(), [self.serialise_for_appsearch()]
-                )
-            else:
-                return self.get_appsearch_client().index_documents(
-                    self.get_appsearch_engine_name(), [self.serialise_for_appsearch()]
-                )
+            self._index_to_engine(self.get_appsearch_engine_name(), update_only=update_only)
 
     def delete_from_appsearch(self):
         """Delete the object from appsearch."""
         if apps.get_app_config("django_elastic_appsearch").enabled:
-            return self.destroy_document(self.get_appsearch_engine_name())
+            return self._destroy_document(self.get_appsearch_engine_name())
 
 
 class AppSearchMultiEngineModel(SuperAppSearchModel):
@@ -157,9 +149,6 @@ class AppSearchMultiEngineModel(SuperAppSearchModel):
     def get_appsearch_serialiser_engine_pairs(cls):
         return cls.AppsearchMeta.appsearch_serialiser_engine_pairs
 
-    def index_to_appsearch(self, update_only=False):
-        pass
-
     def serialise_for_appsearch(self, engine_name=None):
         "Serialise the instance for appsearch."""
         _pairs = self.get_appsearch_serialiser_engine_pairs()
@@ -168,11 +157,15 @@ class AppSearchMultiEngineModel(SuperAppSearchModel):
 
         return [serialiser(self).data for (serialiser, _) in _pairs]
 
+    def index_to_appsearch(self, update_only=False):
+        """Index the object to appsearch."""
+        if apps.get_app_config("django_elastic_appsearch").enabled:
+            return [self._index_to_engine(engine_name, update_only) for (_, engine_name)
+                    in self.get_appsearch_serialiser_engine_pairs()]
+
     def delete_from_appsearch(self):
         """Delete the object from appsearch."""
 
         if apps.get_app_config("django_elastic_appsearch").enabled:
-            [self.destroy_document(engine_name) for (_, engine_name) in self.get_appsearch_serialiser_engine_pairs()]
-
-            #for (_, engine_name) in self.get_appsearch_serialiser_engine_pairs():
-            #    yield self.get_appsearch_client().destroy_documents(engine_name, [self.get_appsearch_document_id()])
+            return [self._destroy_document(engine_name) for (_, engine_name)
+                    in self.get_appsearch_serialiser_engine_pairs()]

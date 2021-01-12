@@ -130,7 +130,7 @@ class TestMultipleEngineModel(BaseElasticAppSearchClientTestCase):
                 year_manufactured=timezone_now,
             )
             truck.save()
-        
+
         # Set the engines and serialisers on the Truck model.
         pairs = [
             (TestMultipleEngineModel.TestSerialiserClass, "test_cars"),
