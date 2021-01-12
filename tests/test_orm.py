@@ -176,7 +176,7 @@ class TestMultipleEngineModel(BaseElasticAppSearchClientTestCase):
         truck = Truck.objects.all()
         truck.index_to_appsearch()
         # Note that the app search chunk size is set to 5 in `tests.settings`
-        # Therefore you should see 5 calls to cover 22 documents
+        # Therefore you should see 5 calls to cover 22 documents, over 2 engines
         self.assertEqual(self.client_index.call_count, 10)
 
     def test_queryset_update(self):
@@ -184,7 +184,7 @@ class TestMultipleEngineModel(BaseElasticAppSearchClientTestCase):
         truck = Truck.objects.all()
         truck.index_to_appsearch(update_only=True)
         # Note that the app search chunk size is set to 5 in `tests.settings`
-        # Therefore you should see 5 calls to cover 22 documents
+        # Therefore you should see 5 calls to cover 22 documents, over 2 engines
         self.assertEqual(self.client_update.call_count, 10)
 
     def test_queryset_delete(self):
@@ -192,5 +192,5 @@ class TestMultipleEngineModel(BaseElasticAppSearchClientTestCase):
         truck = Truck.objects.all()
         truck.delete_from_appsearch()
         # Note that the app search chunk size is set to 5 in `tests.settings`
-        # Therefore you should see 5 calls to cover 22 documents
+        # Therefore you should see 5 calls to cover 22 documents, over 2 engines
         self.assertEqual(self.client_destroy.call_count, 10)
