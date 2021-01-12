@@ -69,17 +69,23 @@ class SuperAppSearchModel(models.Model):
     def serialise_for_appsearch(self, *args):
         pass
 
-    def delete_from_appsearch(self):
-        """Delete the object from appsearch."""
-        if apps.get_app_config("django_elastic_appsearch").enabled:
-            for (_, engine_name) in self.get_appsearch_serialiser_engine_pairs():
-                return self.get_appsearch_client().destroy_documents(
-                    engine_name, [self.get_appsearch_document_id()]
-                )
-
     @classmethod
     def get_appsearch_serialiser_engine_pairs(cls):
         pass
+
+    def destroy_document(self, engine_name):
+        return self.get_appsearch_client().destroy_documents(engine_name, [self.get_appsearch_document_id()])
+
+    def _index_to_engine(self, engine_name, update_only):
+        if update_only:
+                return self.get_appsearch_client().update_documents(
+                    engine_name, [self.serialise_for_appsearch()]
+                )
+        else:
+            return self.get_appsearch_client().index_documents(
+                engine_name, [self.serialise_for_appsearch()]
+            )
+
 
 
 class AppSearchModel(SuperAppSearchModel):
@@ -131,6 +137,11 @@ class AppSearchModel(SuperAppSearchModel):
                     self.get_appsearch_engine_name(), [self.serialise_for_appsearch()]
                 )
 
+    def delete_from_appsearch(self):
+        """Delete the object from appsearch."""
+        if apps.get_app_config("django_elastic_appsearch").enabled:
+            return self.destroy_document(self.get_appsearch_engine_name())
+
 
 class AppSearchMultiEngineModel(SuperAppSearchModel):
     class Meta:
@@ -156,3 +167,12 @@ class AppSearchMultiEngineModel(SuperAppSearchModel):
             _pairs = [pair for pair in _pairs if pair[1] == engine_name]
 
         return [serialiser(self).data for (serialiser, _) in _pairs]
+
+    def delete_from_appsearch(self):
+        """Delete the object from appsearch."""
+
+        if apps.get_app_config("django_elastic_appsearch").enabled:
+            [self.destroy_document(engine_name) for (_, engine_name) in self.get_appsearch_serialiser_engine_pairs()]
+
+            #for (_, engine_name) in self.get_appsearch_serialiser_engine_pairs():
+            #    yield self.get_appsearch_client().destroy_documents(engine_name, [self.get_appsearch_document_id()])
