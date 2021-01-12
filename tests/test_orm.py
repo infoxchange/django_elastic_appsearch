@@ -106,7 +106,7 @@ class TestORM(BaseElasticAppSearchClientTestCase):
 
     def test_serialise_for_appsearch(self):
         car = Car.objects.first()
-        self.assertEqual('Car_1', car.serialise_for_appsearch()['id'])
+        self.assertEqual('Car_1', car.serialise_for_appsearch()[0]['id'])
 
 
 class TestMultipleEngineModel(BaseElasticAppSearchClientTestCase):
