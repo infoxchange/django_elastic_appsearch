@@ -46,7 +46,7 @@ class AppSearchQuerySet(models.QuerySet):
                         )
 
 
-class SuperAppSearchModel(models.Model):
+class BaseAppSearchModel(models.Model):
     objects = AppSearchQuerySet.as_manager()
 
     class Meta:
@@ -98,7 +98,7 @@ class SuperAppSearchModel(models.Model):
                     in self.get_appsearch_serialiser_engine_pairs()]
 
 
-class AppSearchModel(SuperAppSearchModel):
+class AppSearchModel(BaseAppSearchModel):
     """A model that integrates with Elastic App Search."""
 
     class Meta:
@@ -131,7 +131,7 @@ class AppSearchModel(SuperAppSearchModel):
         cls.AppsearchMeta.appsearch_engine_name = engine_name
 
 
-class AppSearchMultiEngineModel(SuperAppSearchModel):
+class AppSearchMultiEngineModel(BaseAppSearchModel):
     class Meta:
         """Meta options for the app search model."""
 
