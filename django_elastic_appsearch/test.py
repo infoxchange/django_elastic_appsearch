@@ -62,10 +62,10 @@ class MockedAppSearchTestCase:
         )
 
         model_index_to_appsearch = patch(
-            'django_elastic_appsearch.orm.AppSearchModel.index_to_appsearch'
+            'django_elastic_appsearch.orm.BaseAppSearchModel._index_to_appsearch'
         )
         model_delete_from_appsearch = patch(
-            'django_elastic_appsearch.orm.AppSearchModel.delete_from_appsearch'
+            'django_elastic_appsearch.orm.BaseAppSearchModel._delete_from_appsearch'
         )
 
         self.queryset_index_to_appsearch = queryset_index_to_appsearch.start()
