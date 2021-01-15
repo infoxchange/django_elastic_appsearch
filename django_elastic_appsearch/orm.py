@@ -69,14 +69,14 @@ class BaseAppSearchModel(models.Model):
     def _index_to_engine(self, engine_name, update_only):
         if update_only:
             return self.get_appsearch_client().update_documents(
-                engine_name, self.serialise_for_appsearch()
+                engine_name, self._serialise_for_appsearch()
             )
         else:
             return self.get_appsearch_client().index_documents(
-                engine_name, self.serialise_for_appsearch()
+                engine_name, self._serialise_for_appsearch()
             )
 
-    def serialise_for_appsearch(self, engine_name=None):
+    def _serialise_for_appsearch(self, engine_name=None):
         """Serialise the instance for appsearch."""
         _pairs = self.get_appsearch_serialiser_engine_pairs()
         if engine_name is not None:
@@ -84,15 +84,14 @@ class BaseAppSearchModel(models.Model):
 
         return [serialiser(self).data for (serialiser, _) in _pairs]
 
-    def index_to_appsearch(self, update_only=False):
+    def _index_to_appsearch(self, update_only=False):
         """Index the object to appsearch."""
         if apps.get_app_config("django_elastic_appsearch").enabled:
             return [self._index_to_engine(engine_name, update_only) for (_, engine_name)
                     in self.get_appsearch_serialiser_engine_pairs()]
 
-    def delete_from_appsearch(self):
+    def _delete_from_appsearch(self):
         """Delete the object from appsearch."""
-
         if apps.get_app_config("django_elastic_appsearch").enabled:
             return [self._destroy_document(engine_name) for (_, engine_name)
                     in self.get_appsearch_serialiser_engine_pairs()]
@@ -130,6 +129,17 @@ class AppSearchModel(BaseAppSearchModel):
         """Set the app search engine name that maps to this model."""
         cls.AppsearchMeta.appsearch_engine_name = engine_name
 
+    def serialise_for_appsearch(self, engine_name=None):
+        return super()._serialise_for_appsearch(engine_name=engine_name)[0]
+
+    def index_to_appsearch(self, update_only=False):
+        response = super()._index_to_appsearch(update_only=update_only)
+        return response[0] if response else None
+
+    def delete_from_appsearch(self):
+        response = super()._delete_from_appsearch()
+        return response[0] if response else None
+
 
 class AppSearchMultiEngineModel(BaseAppSearchModel):
     class Meta:
@@ -144,3 +154,12 @@ class AppSearchMultiEngineModel(BaseAppSearchModel):
     @classmethod
     def get_appsearch_serialiser_engine_pairs(cls):
         return cls.AppsearchMeta.appsearch_serialiser_engine_pairs
+
+    def serialise_for_appsearch(self, engine_name=None):
+        return super()._serialise_for_appsearch(engine_name=engine_name)
+
+    def index_to_appsearch(self, update_only=False):
+        return super()._index_to_appsearch(update_only=update_only)
+
+    def delete_from_appsearch(self):
+        return super()._delete_from_appsearch()
