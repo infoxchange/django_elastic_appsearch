@@ -82,11 +82,11 @@ class MockedAppSearchTestCase:
         super().setUp()
 
     def assertAppSearchModelIndexCallCount(self, call_count):
-        """Check the call count on `AppSearchModel.index_to_appsearch`"""
+        """Check the call count on `BaseAppSearchModel._index_to_appsearch`"""
         self.assertEqual(self.model_index_to_appsearch.call_count, call_count)
 
     def assertAppSearchModelDeleteCallCount(self, call_count):
-        """Check the call count on `AppSearchModel.delete_from_appsearch`"""
+        """Check the call count on `BaseAppSearchModel._delete_from_appsearch`"""
         self.assertEqual(
             self.model_delete_from_appsearch.call_count,
             call_count
