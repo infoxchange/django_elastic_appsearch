@@ -29,6 +29,7 @@ clean-pyc: ## remove Python file artifacts
 
 lint: ## check style with flake8
 	flake8 django_elastic_appsearch tests
+	pydocstyle django_elastic_appsearch tests
 
 test: ## run tests quickly with the default Python
 	python runtests.py tests
