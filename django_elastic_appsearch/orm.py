@@ -47,6 +47,12 @@ class AppSearchQuerySet(models.QuerySet):
 
 
 class BaseAppSearchModel(models.Model):
+    """
+    Base class for AppSearchModel and AppSearchMultiEngineModel.
+
+    Implements operations that interact with app search for both.
+    """
+
     objects = AppSearchQuerySet.as_manager()
 
     class Meta:
@@ -114,6 +120,13 @@ class AppSearchModel(BaseAppSearchModel):
 
     @classmethod
     def get_appsearch_serialiser_engine_pairs(cls):
+        """
+        Get the serialisers and engines.
+
+        Returns:
+        list of (class, string): List of pairs of app search serialisers and engine names
+            to be used together.
+        """
         return [(cls.get_appsearch_serialiser_class(), cls.get_appsearch_engine_name())]
 
     @classmethod
@@ -142,6 +155,8 @@ class AppSearchModel(BaseAppSearchModel):
 
 
 class AppSearchMultiEngineModel(BaseAppSearchModel):
+    """A model that integrates with multiple Elastic App Search engines."""
+
     class Meta:
         """Meta options for the app search model."""
 
@@ -149,10 +164,24 @@ class AppSearchMultiEngineModel(BaseAppSearchModel):
 
     @classmethod
     def set_appsearch_serialiser_engine_pairs(cls, pairs):
+        """
+        Set the serialisers and engines.
+
+        Args:
+            pairs (list of (class, string)): List of pairs of app search serialisers and engine names
+            to be used together.
+        """
         cls.AppsearchMeta.appsearch_serialiser_engine_pairs = pairs
 
     @classmethod
     def get_appsearch_serialiser_engine_pairs(cls):
+        """
+        Get the serialisers and engines.
+
+        Returns:
+        list of (class, string): List of pairs of app search serialisers and engine names
+            to be used together.
+        """
         return cls.AppsearchMeta.appsearch_serialiser_engine_pairs
 
     def serialise_for_appsearch(self, engine_name=None):

@@ -2,8 +2,7 @@
 
 
 def slice_queryset(queryset, chunk_size):
-    """ Slice a queryset into chunks. """
-
+    """Slice a queryset into chunks."""
     start_pk = 0
     queryset = queryset.order_by('pk')
 

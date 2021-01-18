@@ -9,7 +9,7 @@ class BaseElasticAppSearchClientTestCase(TestCase):
     """Base Elastic App Search Client Test case."""
 
     def setUp(self):
-        """Setup the patches."""
+        """Initialise the patches."""
         super().setUp()
         client_index = patch('elastic_app_search.Client.index_documents')
         client_update = patch('elastic_app_search.Client.update_documents')
