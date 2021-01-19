@@ -70,9 +70,11 @@ class BaseAppSearchModel(models.Model):
         return "{}_{}".format(type(self).__name__, self.pk)
 
     def _destroy_document(self, engine_name):
+        """Destroys document in specified engine."""
         return self.get_appsearch_client().destroy_documents(engine_name, [self.get_appsearch_document_id()])
 
     def _index_to_engine(self, engine_name, update_only):
+        """Index to specified engine."""
         if update_only:
             return self.get_appsearch_client().update_documents(
                 engine_name, self._serialise_for_appsearch()
@@ -83,6 +85,16 @@ class BaseAppSearchModel(models.Model):
             )
 
     def _serialise_for_appsearch(self, engine_name=None):
+        """
+        Serialise for app search.
+
+        Args:
+            engine_name (str): Optional, only serialise for the specified engine.
+
+        Returns:
+        list of serialiser output: List of the document serialised with the available
+            serialisers in order, or the serialiser for the specified engine.
+        """
         _pairs = self.get_appsearch_serialiser_engine_pairs()
         if engine_name is not None:
             _pairs = [pair for pair in _pairs if pair[1] == engine_name]
@@ -90,11 +102,26 @@ class BaseAppSearchModel(models.Model):
         return [serialiser(self).data for (serialiser, _) in _pairs]
 
     def _index_to_appsearch(self, update_only=False):
+        """
+        Indexes to all specified app search engines.
+
+        Args:
+            update_only (bool): Update rather than index the documents. Defaults to false.
+
+        Returns:
+            list of app search responses: responses from app search by engine, in order
+        """
         if apps.get_app_config("django_elastic_appsearch").enabled:
             return [self._index_to_engine(engine_name, update_only) for (_, engine_name)
                     in self.get_appsearch_serialiser_engine_pairs()]
 
     def _delete_from_appsearch(self):
+        """
+        Delete from all specified app search engines.
+
+        Returns:
+            list of app search responses: responses from app search by engine, in order
+        """
         if apps.get_app_config("django_elastic_appsearch").enabled:
             return [self._destroy_document(engine_name) for (_, engine_name)
                     in self.get_appsearch_serialiser_engine_pairs()]
@@ -158,7 +185,7 @@ class AppSearchMultiEngineModel(BaseAppSearchModel):
     """A model that integrates with multiple Elastic App Search engines."""
 
     class Meta:
-        """Meta options for the app search model."""
+        """Meta options for the multi engine app search model."""
 
         abstract = True
 
