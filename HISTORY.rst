@@ -3,7 +3,15 @@
 History
 -------
 
+1.1.0 (2021-01-27)
+===================
+
+* Dependecy upgrades
+* Add ability to index a model object into multiple app search engines
+
+
 1.0.2 (2020-12-29)
+===================
 
 * Dependency upgrades
 
