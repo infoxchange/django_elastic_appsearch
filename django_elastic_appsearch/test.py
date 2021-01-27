@@ -51,7 +51,7 @@ class MockedAppSearchTestCase:
     """
 
     def setUp(self, *args, **kwargs):
-        """Setup app search mocks."""
+        """Initialise app search mocks."""
         queryset_class = kwargs.get('queryset_class', 'django_elastic_appsearch.orm.AppSearchQuerySet.')
 
         queryset_index_to_appsearch = patch(
@@ -62,10 +62,10 @@ class MockedAppSearchTestCase:
         )
 
         model_index_to_appsearch = patch(
-            'django_elastic_appsearch.orm.AppSearchModel.index_to_appsearch'
+            'django_elastic_appsearch.orm.BaseAppSearchModel._index_to_appsearch'
         )
         model_delete_from_appsearch = patch(
-            'django_elastic_appsearch.orm.AppSearchModel.delete_from_appsearch'
+            'django_elastic_appsearch.orm.BaseAppSearchModel._delete_from_appsearch'
         )
 
         self.queryset_index_to_appsearch = queryset_index_to_appsearch.start()
@@ -82,25 +82,25 @@ class MockedAppSearchTestCase:
         super().setUp()
 
     def assertAppSearchModelIndexCallCount(self, call_count):
-        """Check the call count on `AppSearchModel.index_to_appsearch`"""
+        """Check the call count on `BaseAppSearchModel._index_to_appsearch`."""
         self.assertEqual(self.model_index_to_appsearch.call_count, call_count)
 
     def assertAppSearchModelDeleteCallCount(self, call_count):
-        """Check the call count on `AppSearchModel.delete_from_appsearch`"""
+        """Check the call count on `BaseAppSearchModel._delete_from_appsearch`."""
         self.assertEqual(
             self.model_delete_from_appsearch.call_count,
             call_count
         )
 
     def assertAppSearchQuerySetIndexCallCount(self, call_count):
-        """Check the call count on `AppSearchQueryset.index_to_appsearch`"""
+        """Check the call count on `AppSearchQueryset.index_to_appsearch`."""
         self.assertEqual(
             self.queryset_index_to_appsearch.call_count,
             call_count
         )
 
     def assertAppSearchQuerySetDeleteCallCount(self, call_count):
-        """Check the call count on `AppSearchQueryset.delete_from_appsearch`"""
+        """Check the call count on `AppSearchQueryset.delete_from_appsearch`."""
         self.assertEqual(
             self.queryset_delete_from_appsearch.call_count,
             call_count

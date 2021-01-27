@@ -69,7 +69,10 @@ Add the Elastic App Search URL and Key to your settings module:
 Configuring app search indexable models
 =======================================
 
-Configure the Django models you want to index to Elastic App Search. You can do this by inheriting from the ``AppSearchModel``, and then setting some meta options.
+Single engine
+=============
+
+Configure the Django models you want to index to Elastic App Search. To index to one engine you can do this by inheriting from the ``AppSearchModel``, and then setting some meta options.
 
 ``AppsearchMeta.appsearch_engine_name`` - Defines which engine in your app search instance your model will be indexed to.
 
@@ -102,6 +105,43 @@ Example:
         model = models.CharField(max_length=100)
         manufactured_year = models.CharField(max_length=4)
 
+Multi engine
+============
+
+Configure the Django models you want to index to Elastic App Search. To index to multiple engines you can do this by inheriting from the ``AppSearchMultiEngineModel``,
+and then setting a meta option.
+
+``AppsearchMeta.appsearch_serialiser_engine_pairs`` - A list of tuples of serialisers then engines that define which engine in your app search instance your model will
+be indexed to and how your model object will be serialised when sent to your elastic app search instance. The serialiser and fields used here derives from
+`Serpy <https://serpy.readthedocs.io/>`__, and you can use any of the serpy features like method fields.
+
+Example:
+
+.. code-block:: python
+
+    from django_elastic_appsearch.orm import AppSearchModel
+    from django_elastic_appsearch import serialisers
+
+    class CarSerialiser(serialisers.AppSearchSerialiser):
+        full_name = serialisers.MethodField()
+        make = serialisers.StrField()
+        model = serialisers.StrField()
+        manufactured_year = serialisers.Field()
+
+        def get_full_name(self, instance):
+            return '{} {}'.format(make, model)
+
+
+    class Truck(AppSearchMultiEngineModel):
+        """A truck."""
+
+        class AppsearchMeta:
+            appsearch_serialiser_engine_pairs = [(CarSerialiser, "trucks")]
+
+        make = models.TextField()
+        model = models.TextField()
+        year_manufactured = models.DateTimeField()
+
 Using model and queryset methods to index and delete documents
 ==============================================================
 
@@ -124,6 +164,8 @@ Delete the car with id 21 from app search.
 
     car = Car.objects.get(id=21)
     car.delete_from_appsearch()
+
+Calling these on an ``AppSearchModel`` will return a single response object, and calling them on an ``AppSearchMultiEngineModel`` will return a list of response objects.
 
 You can also call ``index_to_appsearch`` and ``delete_from_appsearch`` on QuerySets of ``AppSearchModel``
 
@@ -311,7 +353,7 @@ Example with all settings entries
 Writing Tests
 =============
 
-This package provides a test case mixin called ``MockedAppSearchTestCase`` which makes it easier for you to write test cases against ``AppSearchModel``'s without actually having to run an Elastic App Search instance during tests.
+This package provides a test case mixin called ``MockedAppSearchTestCase`` which makes it easier for you to write test cases against ``AppSearchModel``'s and ``AppSearchMultiEngineModel``'s without actually having to run an Elastic App Search instance during tests.
 
 All you have to do is inherit the mixin, and all the calls to Elastic App Search will be mocked. Example below.
 

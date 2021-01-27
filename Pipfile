@@ -12,6 +12,7 @@ mock = "*"
 flake8 = "*"
 codecov = "*"
 tox = "*"
+pydocstyle = "*"
 
 [packages]
 elastic-app-search = "*"
