@@ -120,6 +120,7 @@ class BaseAppSearchModel(models.Model):
         if apps.get_app_config("django_elastic_appsearch").enabled:
             return [self._index_to_engine(engine_name, update_only) for (_, engine_name)
                     in self.get_appsearch_serialiser_engine_pairs()]
+        return []
 
     def _delete_from_appsearch(self):
         """
@@ -131,6 +132,7 @@ class BaseAppSearchModel(models.Model):
         if apps.get_app_config("django_elastic_appsearch").enabled:
             return [self._destroy_document(engine_name) for (_, engine_name)
                     in self.get_appsearch_serialiser_engine_pairs()]
+        return []
 
 
 class AppSearchModel(BaseAppSearchModel):
