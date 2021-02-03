@@ -3,6 +3,14 @@
 History
 -------
 
+1.1.1 (2021-02-04)
+===================
+
+* Dependency upgrades
+* Security patch
+* Improve returned responses
+
+
 1.1.0 (2021-01-27)
 ===================
 
