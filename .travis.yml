@@ -4,15 +4,15 @@ language: python
 dist: xenial
 
 python:
+  - "3.9"
   - "3.8"
   - "3.7"
   - "3.6"
 
 env:
-  - TOX_ENV=django-20
-  - TOX_ENV=django-21
   - TOX_ENV=django-22
-  - TOX_ENV=django-30
+  - TOX_ENV=django-31
+  - TOX_ENV=django-32
 
 matrix:
   fast_finish: true
