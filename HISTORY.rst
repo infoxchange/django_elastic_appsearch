@@ -3,6 +3,14 @@
 History
 -------
 
+1.1.3 (2021-04-12)
+===================
+
+* Add Django 3.2 to the test matrix
+* Dependency upgrades
+* Minor fixes
+
+
 1.1.2 (2021-02-11)
 ===================
 
