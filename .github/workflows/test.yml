@@ -14,7 +14,7 @@ jobs:
     strategy:
       matrix:
         python-version: [ '3.6', '3.7', '3.8', '3.9' ]
-        tox-env: [ 'django-22', 'django-30', 'django-31' ]
+        tox-env: [ 'django-22', 'django-31', 'django-32' ]
     name: python-${{ matrix.python-version }} / ${{ matrix.tox-env }}
     steps:
       - uses: actions/checkout@v1
