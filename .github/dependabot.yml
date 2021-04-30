@@ -1,0 +1,19 @@
+version: 2
+updates:
+- package-ecosystem: pip
+  directory: "/"
+  schedule:
+    interval: daily
+    time: "19:00"
+  open-pull-requests-limit: 10
+  reviewers:
+  - CorrosiveKid
+  assignees:
+  - CorrosiveKid
+  labels:
+  - dependency
+  versioning-strategy: lockfile-only
+  ignore:
+  - dependency-name: bleach
+    versions:
+    - 3.3.0
