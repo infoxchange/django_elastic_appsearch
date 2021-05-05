@@ -3,4 +3,4 @@
 # pylint:disable=invalid-name
 # Django requires `default_app_config`
 default_app_config = 'django_elastic_appsearch.apps.DjangoAppSearchConfig'
-__version__ = '1.1.3'
+__version__ = '1.1.4'

@@ -46,7 +46,7 @@ history = open('HISTORY.rst', encoding='utf-8').read().replace('.. :changelog:',
 
 setup(
     name='django_elastic_appsearch',
-    version='1.1.3',
+    version='1.1.4',
     description="""Integrate your Django Project with Elastic App Search with ease.""",
     long_description=readme + '\n\n' + history,
     author='Rasika Amaratissa',
