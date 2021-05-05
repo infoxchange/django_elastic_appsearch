@@ -3,6 +3,13 @@
 History
 -------
 
+1.1.4 (2021-05-05)
+===================
+
+* Updated documentation
+* Dependency upgrades
+
+
 1.1.3 (2021-04-12)
 ===================
 
