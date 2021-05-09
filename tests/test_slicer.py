@@ -5,6 +5,7 @@
 
 from django.test import TestCase
 from django.utils import timezone
+
 from django_elastic_appsearch.slicer import slice_queryset
 
 from example.models import Car

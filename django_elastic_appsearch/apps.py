@@ -29,24 +29,23 @@ class DjangoAppSearchConfig(AppConfig):
 
         self.api_key = settings.APPSEARCH_API_KEY
 
-        if hasattr(settings, 'APPSEARCH_USE_HTTPS'):
-            self.use_https = settings.APPSEARCH_USE_HTTPS
-        else:
-            self.use_https = True
+        self.use_https = getattr(settings, 'APPSEARCH_USE_HTTPS', True)
 
-        if hasattr(settings, 'APPSEARCH_CHUNK_SIZE'):
-            self.chunk_size = settings.APPSEARCH_CHUNK_SIZE
-        else:
-            self.chunk_size = 100
+        self.chunk_size = getattr(settings, 'APPSEARCH_CHUNK_SIZE', 100)
 
-        if hasattr(settings, 'APPSEARCH_INDEXING_ENABLED'):
-            self.enabled = settings.APPSEARCH_INDEXING_ENABLED
-        else:
-            self.enabled = True
+        self.enabled = getattr(settings, 'APPSEARCH_INDEXING_ENABLED', True)
 
         # Don't try to index documents to app search if
         # APPSEARCH_HOST or APPSEARCH_API_KEY is set to None
         if self.api_v1_base_endpoint is None or self.api_key is None:
             self.enabled = False
+
+        # Whether to use signals to index on save/delete
+        # If True, signals attached even if APPSEARCH_INDEXING_ENABLED is False
+        # However, APPSEARCH_INDEXING_ENABLED still determines
+        # whether an index operation will occur
+        self.auto_indexing = getattr(
+            settings, 'APPSEARCH_AUTOINDEXING_ENABLED', False
+        )
 
         super().__init__(*args, **kwargs)

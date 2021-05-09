@@ -11,3 +11,4 @@ Contributors
 ------------
 
 * Bianca Gibson <bianca.rachel.gibson@gmail.com>
+* Bryce James <bryce@idscreates.com>

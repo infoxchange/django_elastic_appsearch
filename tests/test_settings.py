@@ -134,3 +134,12 @@ class TestDjangoElasticAppSearchSettings(BaseElasticAppSearchClientTestCase):
 
             self.assertEqual(self.client_index.call_count, 0)
             self.assertEqual(self.client_destroy.call_count, 0)
+
+    @override_settings(APPSEARCH_AUTOINDEXING_ENABLED=True)
+    def test_appsearch_autoindexing_enabled_setting(self):
+        """Test `APPSEARCH_INDEXING_ENABLED` setting."""
+        config = DjangoAppSearchConfig(
+            app_name=self.original_config.name,
+            app_module=self.original_config.module
+        )
+        self.assertTrue(config.auto_indexing)

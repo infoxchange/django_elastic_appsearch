@@ -2,9 +2,12 @@
 
 from django.apps import apps
 from django.db import models
+from django.db.models.signals import post_save, post_delete
 
 from django_elastic_appsearch.clients import get_api_v1_client
 from django_elastic_appsearch.slicer import slice_queryset
+from django_elastic_appsearch.signals import post_save_receiver
+from django_elastic_appsearch.signals import post_delete_receiver
 
 
 class AppSearchQuerySet(models.QuerySet):
@@ -142,6 +145,15 @@ class AppSearchModel(BaseAppSearchModel):
         """Meta options for the app search model."""
 
         abstract = True
+
+    def __init_subclass__(cls, **kwargs):
+        super().__init_subclass__(**kwargs)
+
+        # If auto indexing enabled
+        # Apply signals to sub-classed model
+        if apps.get_app_config('django_elastic_appsearch').auto_indexing:
+            post_save.connect(post_save_receiver, sender=cls)
+            post_delete.connect(post_delete_receiver, sender=cls)
 
     @classmethod
     def get_appsearch_serialiser_class(cls):
