@@ -11,3 +11,4 @@ Contributors
 ------------
 
 * Rasika Amaratissa <rasika.am@gmail.com>
+* Mat Munn <mat@matmunn.me>
