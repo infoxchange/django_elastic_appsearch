@@ -49,9 +49,9 @@ setup(
     version='1.1.4',
     description="""Integrate your Django Project with Elastic App Search with ease.""",
     long_description=readme + '\n\n' + history,
-    author='Rasika Amaratissa',
-    author_email='rasika.am@gmail.com',
-    url='https://github.com/CorrosiveKid/django_elastic_appsearch',
+    author='Infoxchange',
+    author_email='devs@infoxchange.org',
+    url='https://github.com/infoxchange/django_elastic_appsearch',
     packages=[
         'django_elastic_appsearch',
     ],

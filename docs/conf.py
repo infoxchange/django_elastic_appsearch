@@ -47,7 +47,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'Django Elastic App Search'
-copyright = u'2019, Rasika Amaratissa'
+copyright = u'2021, Infoxchange'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -193,7 +193,7 @@ latex_elements = {
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
   ('index', 'django_elastic_appsearch.tex', u'Django Elastic App Search Documentation',
-   u'Rasika Amaratissa', 'manual'),
+   u'Infoxchange', 'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
@@ -223,7 +223,7 @@ latex_documents = [
 # (source start file, name, description, authors, manual section).
 man_pages = [
     ('index', 'django_elastic_appsearch', u'Django Elastic App Search Documentation',
-     [u'Rasika Amaratissa'], 1)
+     [u'Infoxchange'], 1)
 ]
 
 # If true, show URL addresses after external links.
@@ -237,7 +237,7 @@ man_pages = [
 #  dir menu entry, description, category)
 texinfo_documents = [
   ('index', 'django_elastic_appsearch', u'Django Elastic App Search Documentation',
-   u'Rasika Amaratissa', 'django_elastic_appsearch', 'One line description of project.',
+   u'Infoxchange', 'django_elastic_appsearch', 'One line description of project.',
    'Miscellaneous'),
 ]
 
