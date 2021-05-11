@@ -3,6 +3,14 @@
 History
 -------
 
+1.1.5 (2021-05-11)
+===================
+
+* Transfer ownership to Infoxchange
+* Update documentation
+* Dependency upgrades
+
+
 1.1.4 (2021-05-05)
 ===================
 
