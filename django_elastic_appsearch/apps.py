@@ -10,6 +10,7 @@ class DjangoAppSearchConfig(AppConfig):
 
     name = 'django_elastic_appsearch'
     verbose_name = 'Django Elastic App Search'
+    default_auto_field = 'django.db.models.BigAutoField'
 
     def __init__(self, *args, **kwargs):
         """Initialise the config."""
@@ -21,6 +22,8 @@ class DjangoAppSearchConfig(AppConfig):
             raise ImproperlyConfigured(
                 "You must specify the `APPSEARCH_API_KEY` in your settings."
             )
+
+        self.appsearch_host = settings.APPSEARCH_HOST
 
         if settings.APPSEARCH_HOST:
             self.api_v1_base_endpoint = settings.APPSEARCH_HOST + '/api/as/v1'

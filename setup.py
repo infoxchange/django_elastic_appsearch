@@ -58,6 +58,7 @@ setup(
     include_package_data=True,
     install_requires=[
         'elastic-app-search',
+        'elastic-enterprise-search>=7.13.0',
         'serpy',
     ],
     license="MIT",
