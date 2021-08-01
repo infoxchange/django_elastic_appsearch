@@ -26,7 +26,7 @@ class AppSearchQuerySet(models.QuerySet):
                 for queryset in slices:
                     responses += client.delete_documents(
                         engine_name=engine_name,
-                        body=[item.get_appsearch_document_id() for item in queryset]
+                        document_ids=[item.get_appsearch_document_id() for item in queryset]
                     )
 
         return responses
@@ -42,12 +42,12 @@ class AppSearchQuerySet(models.QuerySet):
                     if update_only:
                         responses += client.put_documents(
                             engine_name=engine_name,
-                            body=[item.serialise_for_appsearch(engine_name) for item in queryset]
+                            documents=[item.serialise_for_appsearch(engine_name) for item in queryset]
                         )
                     else:
                         responses += client.index_documents(
                             engine_name=engine_name,
-                            body=[item.serialise_for_appsearch(engine_name) for item in queryset]
+                            documents=[item.serialise_for_appsearch(engine_name) for item in queryset]
                         )
 
         return responses
@@ -91,18 +91,18 @@ class BaseAppSearchModel(models.Model):
         """Destroys document in specified engine."""
         return self.get_enterprise_search_appsearch_client().delete_documents(
             engine_name=engine_name,
-            body=[self.get_appsearch_document_id()]
+            document_ids=[self.get_appsearch_document_id()]
         )
 
     def _index_to_engine(self, engine_name, update_only):
         """Index to specified engine."""
         if update_only:
             return self.get_enterprise_search_appsearch_client().put_documents(
-                engine_name=engine_name, body=self._serialise_for_appsearch()
+                engine_name=engine_name, documents=self._serialise_for_appsearch()
             )
         else:
             return self.get_enterprise_search_appsearch_client().index_documents(
-                engine_name=engine_name, body=self._serialise_for_appsearch()
+                engine_name=engine_name, documents=self._serialise_for_appsearch()
             )
 
     def _serialise_for_appsearch(self, engine_name=None):
