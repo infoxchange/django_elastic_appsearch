@@ -10,7 +10,6 @@ class DjangoAppSearchConfig(AppConfig):
 
     name = 'django_elastic_appsearch'
     verbose_name = 'Django Elastic App Search'
-    default_auto_field = 'django.db.models.BigAutoField'
 
     def __init__(self, *args, **kwargs):
         """Initialise the config."""
@@ -31,6 +30,12 @@ class DjangoAppSearchConfig(AppConfig):
             self.api_v1_base_endpoint = None
 
         self.api_key = settings.APPSEARCH_API_KEY
+
+        self.extra_config_options = getattr(
+            settings,
+            'APPSEARCH_EXTRA_CONFIG',
+            {}
+        )
 
         if hasattr(settings, 'APPSEARCH_USE_HTTPS'):
             self.use_https = settings.APPSEARCH_USE_HTTPS

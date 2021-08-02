@@ -23,7 +23,8 @@ def get_api_v1_client():
     return Client(
         api_key=api_key,
         base_endpoint=base_endpoint,
-        use_https=use_https
+        use_https=use_https,
+        **config.extra_config_options
     )
 
 
@@ -40,4 +41,4 @@ def get_api_v1_enterprise_search_client():
         appsearch_host
     )
 
-    return AppSearch(url, http_auth=api_key)
+    return AppSearch(url, http_auth=api_key, **config.extra_config_options)
