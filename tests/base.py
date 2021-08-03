@@ -11,9 +11,9 @@ class BaseElasticAppSearchClientTestCase(TestCase):
     def setUp(self):
         """Initialise the patches."""
         super().setUp()
-        client_index = patch('elastic_enterprise_search.AppSearch.index_documents')
-        client_update = patch('elastic_enterprise_search.AppSearch.put_documents')
-        client_destroy = patch('elastic_enterprise_search.AppSearch.delete_documents')
+        client_index = patch('elastic_enterprise_search.client.AppSearch.index_documents')
+        client_update = patch('elastic_enterprise_search.client.AppSearch.put_documents')
+        client_destroy = patch('elastic_enterprise_search.client.AppSearch.delete_documents')
 
         self.client_index = client_index.start()
         self.client_update = client_update.start()
