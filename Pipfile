@@ -7,7 +7,7 @@ verify_ssl = true
 bumpversion = "*"
 wheel = "*"
 twine = "*"
-coverage = "*"
+coverage = "==6.0b1"
 mock = "*"
 flake8 = "*"
 codecov = "*"
