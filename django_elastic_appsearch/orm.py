@@ -1,9 +1,10 @@
 """ORM features for Elastic App Search."""
 
+import warnings
 from django.apps import apps
 from django.db import models
 
-from django_elastic_appsearch.clients import get_api_v1_client
+from django_elastic_appsearch.clients import get_api_v1_client, get_api_v1_enterprise_search_client
 from django_elastic_appsearch.slicer import slice_queryset
 
 
@@ -20,12 +21,12 @@ class AppSearchQuerySet(models.QuerySet):
         responses = []
         if self and apps.get_app_config('django_elastic_appsearch').enabled:
             for (_, engine_name) in self.first().get_appsearch_serialiser_engine_pairs():
-                client = self.first().get_appsearch_client()
+                client = self.first().get_enterprise_search_appsearch_client()
                 slices = self._get_sliced_queryset()
                 for queryset in slices:
-                    responses += client.destroy_documents(
-                        engine_name,
-                        [item.get_appsearch_document_id() for item in queryset]
+                    responses += client.delete_documents(
+                        engine_name=engine_name,
+                        document_ids=[item.get_appsearch_document_id() for item in queryset]
                     )
 
         return responses
@@ -35,18 +36,18 @@ class AppSearchQuerySet(models.QuerySet):
         responses = []
         if self and apps.get_app_config('django_elastic_appsearch').enabled:
             for (_, engine_name) in self.first().get_appsearch_serialiser_engine_pairs():
-                client = self.first().get_appsearch_client()
+                client = self.first().get_enterprise_search_appsearch_client()
                 slices = self._get_sliced_queryset()
                 for queryset in slices:
                     if update_only:
-                        responses += client.update_documents(
-                            engine_name,
-                            [item.serialise_for_appsearch(engine_name) for item in queryset]
+                        responses += client.put_documents(
+                            engine_name=engine_name,
+                            documents=[item.serialise_for_appsearch(engine_name) for item in queryset]
                         )
                     else:
                         responses += client.index_documents(
-                            engine_name,
-                            [item.serialise_for_appsearch(engine_name) for item in queryset]
+                            engine_name=engine_name,
+                            documents=[item.serialise_for_appsearch(engine_name) for item in queryset]
                         )
 
         return responses
@@ -69,7 +70,18 @@ class BaseAppSearchModel(models.Model):
     @classmethod
     def get_appsearch_client(cls):
         """Get the App Search client."""
+        warnings.warn(
+            "`get_appsearch_client` is deprecated and will be removed in a future "
+            "release. Please configure your application to use "
+            "`get_enterprise_search_appsearch_client` instead.",
+            DeprecationWarning
+        )
         return get_api_v1_client()
+
+    @classmethod
+    def get_enterprise_search_appsearch_client(cls):
+        """Get the Enterprise Search appsearch client."""
+        return get_api_v1_enterprise_search_client()
 
     def get_appsearch_document_id(self):
         """Get the unique document ID."""
@@ -77,17 +89,20 @@ class BaseAppSearchModel(models.Model):
 
     def _destroy_document(self, engine_name):
         """Destroys document in specified engine."""
-        return self.get_appsearch_client().destroy_documents(engine_name, [self.get_appsearch_document_id()])
+        return self.get_enterprise_search_appsearch_client().delete_documents(
+            engine_name=engine_name,
+            document_ids=[self.get_appsearch_document_id()]
+        )
 
     def _index_to_engine(self, engine_name, update_only):
         """Index to specified engine."""
         if update_only:
-            return self.get_appsearch_client().update_documents(
-                engine_name, self._serialise_for_appsearch()
+            return self.get_enterprise_search_appsearch_client().put_documents(
+                engine_name=engine_name, documents=self._serialise_for_appsearch()
             )
         else:
-            return self.get_appsearch_client().index_documents(
-                engine_name, self._serialise_for_appsearch()
+            return self.get_enterprise_search_appsearch_client().index_documents(
+                engine_name=engine_name, documents=self._serialise_for_appsearch()
             )
 
     def _serialise_for_appsearch(self, engine_name=None):

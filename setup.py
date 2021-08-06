@@ -58,6 +58,7 @@ setup(
     include_package_data=True,
     install_requires=[
         'elastic-app-search',
+        'elastic-enterprise-search>=7.13.0',
         'serpy',
     ],
     license="MIT",
@@ -68,6 +69,7 @@ setup(
         'Framework :: Django :: 2.2',
         'Framework :: Django :: 3.0',
         'Framework :: Django :: 3.1',
+        'Framework :: Django :: 3.2',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: MIT License',
         'Natural Language :: English',

@@ -22,12 +22,20 @@ class DjangoAppSearchConfig(AppConfig):
                 "You must specify the `APPSEARCH_API_KEY` in your settings."
             )
 
+        self.appsearch_host = settings.APPSEARCH_HOST
+
         if settings.APPSEARCH_HOST:
             self.api_v1_base_endpoint = settings.APPSEARCH_HOST + '/api/as/v1'
         else:
             self.api_v1_base_endpoint = None
 
         self.api_key = settings.APPSEARCH_API_KEY
+
+        self.extra_config_options = getattr(
+            settings,
+            'APPSEARCH_EXTRA_CONFIG',
+            {}
+        )
 
         if hasattr(settings, 'APPSEARCH_USE_HTTPS'):
             self.use_https = settings.APPSEARCH_USE_HTTPS
