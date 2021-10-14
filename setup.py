@@ -46,7 +46,7 @@ history = open('HISTORY.rst', encoding='utf-8').read().replace('.. :changelog:',
 
 setup(
     name='django_elastic_appsearch',
-    version='1.2.0',
+    version='1.2.1',
     description="""Integrate your Django Project with Elastic App Search with ease.""",
     long_description=readme + '\n\n' + history,
     author='Infoxchange',
@@ -58,7 +58,7 @@ setup(
     include_package_data=True,
     install_requires=[
         'elastic-app-search',
-        'elastic-enterprise-search>=7.13.0',
+        'elastic-enterprise-search>=7.15.0',
         'serpy',
     ],
     license="MIT",
