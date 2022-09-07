@@ -41,4 +41,4 @@ def get_api_v1_enterprise_search_client():
         appsearch_host
     )
 
-    return AppSearch(url, http_auth=api_key, **config.extra_config_options)
+    return AppSearch(url, bearer_auth=api_key, **config.extra_config_options)
