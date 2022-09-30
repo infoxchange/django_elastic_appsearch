@@ -397,7 +397,7 @@ If you are using a subclass of `AppSearchQuerySet` that overrides methods withou
 Using the elastic app search python client
 ==========================================
 
-We use the official `elastic app search python client <https://github.com/elastic/app-search-python>`_ under the hood to communicate with the app search instance. So if needed, you can access the app search instance directly and use the functionality of the official elastic app search `client <https://github.com/elastic/app-search-python#usage>`_. Example below.
+We use the official `elastic app search python client <https://github.com/elastic/enterprise-search-python>`_ under the hood to communicate with the app search instance. So if needed, you can access the app search instance directly and use the functionality of the official elastic app search `client <https://github.com/elastic/app-search-python#usage>`_. Example below.
 
 .. code-block:: python
 
