@@ -57,7 +57,6 @@ setup(
     ],
     include_package_data=True,
     install_requires=[
-        'elastic-app-search',
         'elastic-enterprise-search>=7.15.0',
         'serpy',
     ],

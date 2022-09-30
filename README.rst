@@ -34,7 +34,7 @@ Dependencies
 
 * Python >= 3.6
 * Django >= 2.2
-* `elastic-app-search <https://pypi.org/project/elastic-app-search/>`_
+* `elastic-enterprise-search <https://pypi.org/project/elastic-enterprise-search/>`_
 * `serpy <https://pypi.org/project/serpy/>`_
 
 Usage
@@ -401,9 +401,9 @@ We use the official `elastic app search python client <https://github.com/elasti
 
 .. code-block:: python
 
-    from django_elastic_appsearch.clients import get_api_v1_client
+    from django_elastic_appsearch.clients import get_api_v1_enterprise_search_client
 
-    client = get_api_v1_client()
+    client = get_api_v1_enterprise_search_client()
     client.search('cars', 'Toyota Corolla', {})
 
 Contributing
