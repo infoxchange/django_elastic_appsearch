@@ -34,7 +34,7 @@ Dependencies
 
 * Python >= 3.6
 * Django >= 2.2
-* `elastic-app-search <https://pypi.org/project/elastic-app-search/>`_
+* `elastic-enterprise-search <https://pypi.org/project/elastic-enterprise-search/>`_
 * `serpy <https://pypi.org/project/serpy/>`_
 
 Usage
@@ -397,13 +397,13 @@ If you are using a subclass of `AppSearchQuerySet` that overrides methods withou
 Using the elastic app search python client
 ==========================================
 
-We use the official `elastic app search python client <https://github.com/elastic/app-search-python>`_ under the hood to communicate with the app search instance. So if needed, you can access the app search instance directly and use the functionality of the official elastic app search `client <https://github.com/elastic/app-search-python#usage>`_. Example below.
+We use the official `elastic app search python client <https://github.com/elastic/enterprise-search-python>`_ under the hood to communicate with the app search instance. So if needed, you can access the app search instance directly and use the functionality of the official elastic app search `client <https://github.com/elastic/enterprise-search-python#usage>`_. Example below.
 
 .. code-block:: python
 
-    from django_elastic_appsearch.clients import get_api_v1_client
+    from django_elastic_appsearch.clients import get_api_v1_enterprise_search_client
 
-    client = get_api_v1_client()
+    client = get_api_v1_enterprise_search_client()
     client.search('cars', 'Toyota Corolla', {})
 
 Contributing
